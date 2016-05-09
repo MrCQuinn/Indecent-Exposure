@@ -4,6 +4,8 @@
 #include "sdl_setup.hpp"
 #include "collision_rectangle.hpp"
 #include "character.hpp"
+#include "NPC.hpp"
+#include <vector>
 
 class Character; //avoids error because Environment includes Character and vice versa
 class Building;
@@ -19,6 +21,8 @@ public:
     void DrawBack();
     void Update();
     
+    bool isSeen();
+    
 private:
     SDL_Setup* sdl_setup;
     CollisionRectangle collision_rect;
@@ -29,6 +33,10 @@ private:
     bool showMenu;
     SDL_Texture* characterImage;
     Character* character;
+    std::vector<NPC*> npcList;
+    
+    NPC* npc;
+    NPC* npc2;
     
     
 };

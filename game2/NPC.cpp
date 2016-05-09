@@ -1,8 +1,8 @@
-#include "character.hpp"
+#include "NPC.hpp"
 #include "main.hpp"
 #include <math.h>
 
-Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
+NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment, int type, int dist) //Constructor
 {
     
     environment = passed_environment;
@@ -19,14 +19,24 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     prevX = starting_x;
     prevY = starting_y;
     stopAnimation = false;
+    
+    npcType = type;
+    npcDist = dist;
+    
+    
+    if(type== 1){
+        direction = 1;
+    }else if(type == 2){
+        direction = 1;
+    }
 }
 
-Character::~Character() //Destructor
+NPC::~NPC() //Destructor
 {
     delete unit;
 }
 
-double Character::GetDistance(int x1, int y1, int x2, int y2)
+double NPC::GetDistance(int x1, int y1, int x2, int y2)
 { //used for unit to take most direct path to target
     double differenceX = x1 - x2;
     double differenceY = y1 - y2;
@@ -34,71 +44,74 @@ double Character::GetDistance(int x1, int y1, int x2, int y2)
     return distance;
 }
 
-void Character::Draw()
+void NPC::Draw()
 {
     unit->Draw();
 }
 
-void Character::Update()
+void NPC::Update()
 {
-    if(isSeen()){
-        unit->SetY(prevY);
-        unit->SetX(prevX);
-    }
-    
     Animate();
     Move();    // Moves the character
     
     
-    if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
-        if(sdl_setup->GetEv()->key.keysym.sym == SDLK_DOWN){
-            //MOVE CHARACTER DOWN
-            direction = 4;
-            stopAnimation = false;
-        }else if(sdl_setup->GetEv()->key.keysym.sym == SDLK_UP){
-            //MOVE CHARACTER UP
-            direction = 3;
-            stopAnimation = false;
-        }else if(sdl_setup->GetEv()->key.keysym.sym == SDLK_LEFT){
-            //MOVE CHARACTER LEFT
-            direction = 1;
-            stopAnimation = false;
-        }else if(sdl_setup->GetEv()->key.keysym.sym == SDLK_RIGHT){
-            //MOVE CHARACTER RIGHT
-            direction = 2;
-            stopAnimation = false;
+    //direction
+    // 1 = left; 2 = right; 3 = up; 4 = down
+    
+    if(npcType == 1){//back and forth
+        if(direction == 1){
+            if(unit->GetX()<(prevX-npcDist)){
+                prevX = unit->GetX();
+                direction = 2;
+            }
+        }else if(direction == 2){
+            if(unit->GetX()>(prevX+npcDist)){
+                prevX = unit->GetX();
+                direction = 1;
+            }
         }
-    }else{
-        direction = 0;
-        stopAnimation = true;
+    }else if(npcType == 2){//circle
+        if(direction == 1){
+            if(unit->GetX()<(prevX-npcDist)){
+                prevX = unit->GetX();
+                direction = 4;
+            }
+        }else if(direction == 2){
+            if(unit->GetX()>(prevX+npcDist)){
+                prevX = unit->GetX();
+                direction = 3;
+            }
+        }else if(direction == 4){
+            if(unit->GetY()>(prevY+npcDist)){
+                prevY = unit->GetY();
+                direction = 2;
+            }
+        }else if(direction == 3){
+            if(unit->GetY()<(prevY-npcDist)){
+                prevY = unit->GetY();
+                direction = 1;
+            }
+        }
     }
 }
 
-bool Character::isSeen(){
-    if(environment->isSeen()){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-void Character::Move(){
+void NPC::Move(){
     if (!colliding){
         if (direction == 1) //left
         {
-            unit->SetX(unit->GetX() - (.5 * 1.5f )); // * 1.5f is speed
+            unit->SetX(unit->GetX() - (.5 * .5f )); // * .5f is speed
         }
         if (direction == 2) //right
         {
-            unit->SetX(unit->GetX() + (.5 * 1.5f ));
+            unit->SetX(unit->GetX() + (.5 * .5f ));
         }
         if (direction == 3) //up
         {
-            unit->SetY(unit->GetY() - (.5 * 1.5f ));
+            unit->SetY(unit->GetY() - (.5 * .5f ));
         }
         if (direction == 4) //down
         {
-            unit->SetY(unit->GetY() + (.5 * 1.5f ));
+            unit->SetY(unit->GetY() + (.5 * .5f ));
         }
     }
     if(unit->GetX()>1024){
@@ -113,14 +126,9 @@ void Character::Move(){
     if(unit->GetY()<0){
         unit->SetY(768);
     }
-    
-    
-//    prevX = unit->GetX();
-//    prevY = unit->GetY();
-
 }
 
-void Character::Animate(){
+void NPC::Animate(){
     
     if (!stopAnimation)
     {
@@ -144,27 +152,31 @@ void Character::Animate(){
 }
 
 
-int Character::getCharacterX(){
+int NPC::getCharacterX(){
     return unit->GetX();
 }
 
-int Character::getCharacterY(){
+int NPC::getCharacterY(){
     return unit->GetY();
 }
 
-int Character::getCharacterW(){
+int NPC::getCharacterW(){
     return unit->GetWidth();
 }
 
-int Character::getCharacterH(){
+int NPC::getCharacterH(){
     return unit->GetHeight();
 }
 
-void Character::setDirection(int d)
+void NPC::setDirection(int d)
 {
     direction = d;
     if(direction >  0){
         moving = true;
     }
+}
+
+int NPC::getNPCDirection(){
+    return direction;
 }
 

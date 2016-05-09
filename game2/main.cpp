@@ -47,7 +47,7 @@ void Main::GameLoop()
     }
 
     gameMap = new Environment(sdl_setup, &MouseX, &MouseY, this);
-    grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //map, one big grass tile
+    grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //map, one big grass tile
     
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {

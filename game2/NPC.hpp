@@ -1,21 +1,20 @@
-#ifndef CHARACTER_HPP
-#define CHARACTER_HPP
+#ifndef NPC_HPP
+#define NPC_HPP
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include <math.h>
 
-class Environment; //avoids error because Environment includes Character and vice versa
-class Building;
+class Environment;
 
-class Character
+class NPC
 {
 public:
-    Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment);
-    Character() {}
-    ~Character();
+    NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment, int type, int dist);
+    NPC() {}
+    ~NPC();
     
-
+    
     double GetDistance(int x1, int y1, int x2, int y2);
     virtual void Update();
     void Draw();
@@ -28,6 +27,7 @@ public:
     int getCharacterY();
     int getCharacterW();
     int getCharacterH();
+    int getNPCDirection();
     
 protected:
     
@@ -43,10 +43,10 @@ protected:
     bool stopAnimation;
     int direction;
     bool moving;
-    
-    bool isSeen();
+    int npcType;
+    int npcDist;
     
 };
 
 
-#endif // CHARACTER_HPP_INCLUDED
+#endif // NPC_HPP_INCLUDED

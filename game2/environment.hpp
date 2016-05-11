@@ -42,9 +42,7 @@ private:
     Wall* horWall3;
     Wall* horWall4;
     std::vector<NPC*> npcList;
-    
-    NPC* npc;
-    NPC* npc2;
+    std::vector<Wall*> horizontalWallList;
     
     
 };

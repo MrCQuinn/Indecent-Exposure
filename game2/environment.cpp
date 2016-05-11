@@ -13,11 +13,18 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     character = new Character(sdl_setup, characterImage, 100, 150, this);
     
     wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/horWall.png");
-    horWall = new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this);
-    horWall1 = new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this);
-    horWall2 = new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this);
-    horWall3 = new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this);
-    horWall4 = new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this);
+//    horWall = new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this);
+//    horWall1 = new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this);
+//    horWall2 = new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this);
+//    horWall3 = new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this);
+//    horWall4 = new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this);
+    
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this));
+
     
     
     //create NPC image
@@ -38,26 +45,30 @@ Environment::~Environment()
     {
         delete (*i);
     }
-    delete horWall;
-    delete horWall1;
-    delete horWall2;
-    delete horWall3;
-    delete horWall4;
+    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
+    {
+        delete (*i);
+    }
 }
 
 void Environment::DrawBack()
 {
-    
-    if(((horWall->getWallY())+(.5 * horWall->getWallH()) > (character->getCharacterY()+(character->getCharacterH()*.5)))){
-        character->Draw();
-    }
-    
-    for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
+    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
     {
-        if((*i)->getCharacterY() < (horWall->getWallY() +  (*i)->getCharacterH())){
-            (*i)->Draw();
+        if((((*i)->getWallY())+(.5 * (*i)->getWallH()) > (character->getCharacterY()+(character->getCharacterH()*.5)))){
+            character->Draw();
+        }
+    
+        for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j)
+        {
+            if((*j)->getCharacterY() < ((*i)->getWallY() +  (*j)->getCharacterH())){
+            (*j)->Draw();
         }
     }
+}
+    
+    
+    
     
     horWall->Draw();
     horWall2->Draw();

@@ -4,6 +4,7 @@
 #include "sdl_setup.hpp"
 #include "collision_rectangle.hpp"
 #include "character.hpp"
+#include "wall.hpp"
 #include "NPC.hpp"
 #include <vector>
 
@@ -32,7 +33,14 @@ private:
     int startTime;
     bool showMenu;
     SDL_Texture* characterImage;
+    SDL_Texture* wallImage;
+
     Character* character;
+    Wall* horWall;
+    Wall* horWall1;
+    Wall* horWall2;
+    Wall* horWall3;
+    Wall* horWall4;
     std::vector<NPC*> npcList;
     
     NPC* npc;

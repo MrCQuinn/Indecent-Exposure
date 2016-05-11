@@ -6,12 +6,11 @@
 #include <math.h>
 
 class Environment; //avoids error because Environment includes Character and vice versa
-class Building;
 
 class Character
 {
 public:
-    Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment);
+    Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment);
     Character() {}
     ~Character();
     
@@ -21,7 +20,6 @@ public:
     void Draw();
     Sprite* GetCharacter() { return unit; }
     void Animate();
-    void Select();
     void Move();
     virtual void setDirection(int d);
     int getCharacterX();
@@ -32,8 +30,6 @@ public:
 protected:
     
     Environment* environment;
-    int *MouseX;
-    int *MouseY;
     SDL_Setup* sdl_setup;
     Sprite* unit;
     bool colliding;

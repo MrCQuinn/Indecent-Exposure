@@ -2,17 +2,15 @@
 #include "main.hpp"
 #include <math.h>
 
-Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
+Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y,  Environment* passed_environment) //Constructor
 {
     
     environment = passed_environment;
     colliding = false;
     
     sdl_setup = passed_SDL_Setup;
-    MouseX = passed_MouseX;
-    MouseY = passed_MouseY;
     
-    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 80, CollisionRectangle(0,0,60,80)); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 90, CollisionRectangle(0,0,60,90)); //unit to move around
     unit->SetUpAnimation(2,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     

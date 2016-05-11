@@ -36,11 +36,6 @@ private:
     SDL_Texture* wallImage;
 
     Character* character;
-    Wall* horWall;
-    Wall* horWall1;
-    Wall* horWall2;
-    Wall* horWall3;
-    Wall* horWall4;
     std::vector<NPC*> npcList;
     std::vector<Wall*> horizontalWallList;
     

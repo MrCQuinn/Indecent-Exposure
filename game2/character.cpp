@@ -111,10 +111,6 @@ void Character::Move(){
     if(unit->GetY()<0){
         unit->SetY(768);
     }
-    
-    
-//    prevX = unit->GetX();
-//    prevY = unit->GetY();
 
 }
 

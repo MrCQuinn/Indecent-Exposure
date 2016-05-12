@@ -32,7 +32,7 @@ protected:
     Environment* environment;
     SDL_Setup* sdl_setup;
     Sprite* unit;
-    bool colliding;
+    bool collidingUp;
     
     int prevX;
     int prevY;

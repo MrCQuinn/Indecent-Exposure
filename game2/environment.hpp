@@ -23,6 +23,8 @@ public:
     void Update();
     
     bool isSeen();
+    bool isCollidingUp();
+    bool isCollidingDown();
     
 private:
     SDL_Setup* sdl_setup;
@@ -34,11 +36,16 @@ private:
     bool showMenu;
     SDL_Texture* characterImage;
     SDL_Texture* wallImage;
+    bool wallCollidingUp;
+    bool wallCollidingDown;
 
     Character* character;
     std::vector<NPC*> npcList;
     std::vector<Wall*> horizontalWallList;
-    
+    std::vector<Wall*> verticalWallList;
+    std::vector<Wall*> aboveWalls;
+    std::vector<Wall*> belowWalls;
+
     
 };
 

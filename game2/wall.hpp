@@ -13,8 +13,19 @@
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include <math.h>
+#include <vector>
 
 class Environment;
+
+class Door{
+    public:
+        int s;
+        int e;
+        Door(int start, int end){
+            s = start;
+            e = end;
+        }
+};
 
 class Wall
 {
@@ -31,6 +42,8 @@ public:
     int getWallY();
     int getWallW();
     int getWallH();
+    void addDoor(int start, int end);
+    std::vector<Door*> doors;
     
 protected:
     
@@ -42,6 +55,10 @@ protected:
     int prevX;
     int prevY;
     
+    
+    
 };
+
+
 
 #endif /* wall_hpp */

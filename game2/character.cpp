@@ -6,7 +6,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
 {
     
     environment = passed_environment;
-    colliding = false;
+    //colliding = false;
     
     sdl_setup = passed_SDL_Setup;
     
@@ -43,6 +43,8 @@ void Character::Update()
         unit->SetY(prevY);
         unit->SetX(prevX);
     }
+    
+    //collidingUp = environment->isCollidingUp(unit->GetY());
     
     Animate();
     Move();    // Moves the character
@@ -81,7 +83,7 @@ bool Character::isSeen(){
 }
 
 void Character::Move(){
-    if (!colliding){
+   // if (!colliding){
         if (direction == 1) //left
         {
             unit->SetX(unit->GetX() - (.5 * 1.5f )); // * 1.5f is speed
@@ -92,13 +94,17 @@ void Character::Move(){
         }
         if (direction == 3) //up
         {
-            unit->SetY(unit->GetY() - (.5 * 1.5f ));
+            if(!environment->isCollidingUp()){
+                unit->SetY(unit->GetY() - (.5 * 1.5f ));
+            }
         }
         if (direction == 4) //down
         {
-            unit->SetY(unit->GetY() + (.5 * 1.5f ));
+            if(!environment->isCollidingDown()){
+                unit->SetY(unit->GetY() + (.5 * 1.5f ));
+            }
         }
-    }
+    //}
     if(unit->GetX()>1024){
         unit->SetX(0);
     }
@@ -111,7 +117,6 @@ void Character::Move(){
     if(unit->GetY()<0){
         unit->SetY(768);
     }
-
 }
 
 void Character::Animate(){

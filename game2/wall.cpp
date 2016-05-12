@@ -39,6 +39,9 @@ void Wall::Update()
     
 }
 
+void Wall::addDoor(int start, int end){
+    doors.push_back(new Door(start, end));
+}
 
 int Wall::getWallX(){
     return unit->GetX();
@@ -55,4 +58,3 @@ int Wall::getWallW(){
 int Wall::getWallH(){
     return unit->GetHeight();
 }
-

@@ -31,10 +31,6 @@ private:
     bool quitEarly;
     AI* ai;
     Sprite* grass;
-    Sprite* orcVictory;
-    Sprite* humanVictory;
-    bool showMenu;
-    int menuType;
     SDL_Setup* sdl_setup;
     int MouseX;
     int MouseY;

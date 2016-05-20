@@ -1,5 +1,6 @@
 #include "environment.hpp"
 #include "main.hpp"
+#include <algorithm>
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, Main* passed_main)
 {

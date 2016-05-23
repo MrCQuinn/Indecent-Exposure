@@ -10,7 +10,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     
     sdl_setup = passed_SDL_Setup;
     
-    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 90, CollisionRectangle(0,0,60,90)); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 90); //unit to move around
     unit->SetUpAnimation(2,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     

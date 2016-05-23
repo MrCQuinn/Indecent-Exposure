@@ -24,7 +24,6 @@ public:
     Items() {}
     ~Items();
     
-    virtual void Update();
     void Draw();
     
 protected:

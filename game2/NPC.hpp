@@ -10,7 +10,7 @@ class Environment;
 class NPC
 {
 public:
-    NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment, int type, int dist);
+    NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int dist);
     NPC() {}
     ~NPC();
     
@@ -32,8 +32,6 @@ public:
 protected:
     
     Environment* environment;
-    int *MouseX;
-    int *MouseY;
     SDL_Setup* sdl_setup;
     Sprite* unit;
     bool colliding;

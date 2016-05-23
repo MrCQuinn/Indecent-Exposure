@@ -18,7 +18,7 @@ Items::Items(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int startin
     
     sdl_setup = passed_SDL_Setup;
     
-    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, w, h, CollisionRectangle(0,0,w,h));
+    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, w, h);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     
     prevX = starting_x;
@@ -36,7 +36,4 @@ void Items::Draw()
     unit->Draw();
 }
 
-void Wall::Update()
-{
-    
-}
+

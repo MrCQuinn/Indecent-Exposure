@@ -2,13 +2,13 @@
 #include "main.hpp"
 #include <algorithm>
 
-Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, Main* passed_main)
+Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main)
 {
     sdl_setup = passed_sdl_setup;
-    MouseX = passed_MouseX;
-    MouseY = passed_MouseY;
     main = passed_main;
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
+    
+    floorSprite = floor;
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character.png");
     character = new Character(sdl_setup, characterImage, 100, 150, this);
@@ -22,16 +22,24 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this));
  
     wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/verWall.png");
-    verticalWallList.push_back(new Wall(sdl_setup, wallImage, 600, 400, 700, 100, this));
-
+    //verticalWallList.push_back(new Wall(sdl_setup, wallImage, 600, 400, 700, 100, this));
+    
+    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 150, 0);
+    seenInt = 0;
 
     wallCollidingUp = false;
     wallCollidingDown = false;
 
-    //create NPC image here
+    //create NPC images here
+    NPCBoyImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/b_student_big.png");
+    NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
+    NPCPrincipalImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
+
     
-    npcList.push_back(new NPC(sdl_setup, characterImage, 300, 400, MouseX, MouseY, this, 1, 200));
-    npcList.push_back(new NPC(sdl_setup, characterImage, 500, 400, MouseX, MouseY, this, 2, 200));
+    npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 300, 400, this, 1, 200));
+    npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
+    npcList.push_back(new NPC(sdl_setup, NPCGirlImage, 700, 200, this, 2, 200));
+    npcList.push_back(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, this, 3, 400));
     
     
     //add doors
@@ -72,11 +80,22 @@ void Environment::DrawBack()
 {
     
     //draw everyone
+    floorSprite->Draw();
     character->Draw();
+    
+    
+    //for all vertical walls
+    for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
+    {
+        //draw wall
+        (*i)->Draw();
+    }
     
     for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j){
         (*j)->Draw();
     }
+    
+    
     
     //for all horizontal walls
     for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
@@ -98,12 +117,7 @@ void Environment::DrawBack()
         }
     }
     
-    //for all vertical walls
-    for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
-    {
-        //draw wall
-        (*i)->Draw();
-    }
+    
     
 }
 
@@ -120,7 +134,7 @@ void Environment::Update()
     }
     for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
     {
-        if(character->getCharacterY()> (*i)->getWallY()){//character is below wall
+        if(character->getCharacterY()> (*i)->getWallY()){//character is above wall
             aboveWalls.push_back((*i));
             belowWalls.erase(std::remove(belowWalls.begin(), belowWalls.end(), (*i)), belowWalls.end());
             //remove from belowWalls
@@ -154,6 +168,8 @@ void Environment::Update()
         }
     }
     
+    timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
+    
 }
 
 bool Environment::isSeen(){
@@ -164,12 +180,14 @@ bool Environment::isSeen(){
         if((character->getCharacterY() > ((*i)->getCharacterY() - (*i)->getCharacterH())) && (character->getCharacterY() < ((*i)->getCharacterY() + (*i)->getCharacterH()))){
             if((*i)->getNPCDirection() == 1){
                 if(character->getCharacterX() > ((*i)->getCharacterX() - (*i)->getCharacterW() - 40) && character->getCharacterX() < (*i)->getCharacterX()){
-                    std::cout << "seen to left character x = " << character->getCharacterX() << " and npc x = " << (*i)->getCharacterX() << std::endl;
+                    //std::cout << "seen to left character x = " << character->getCharacterX() << " and npc x = " << (*i)->getCharacterX() << std::endl;
+                    seenInt++;
                     return true;
                 }
             }else if((*i)->getNPCDirection()== 2){
                 if(character->getCharacterX() < ((*i)->getCharacterX() + (*i)->getCharacterW() + 40) && character->getCharacterX() > (*i)->getCharacterX()){
-                    std::cout << "seen to right character x = " << character->getCharacterX() << " and npc x = " << (*i)->getCharacterX() << std::endl;
+                    //std::cout << "seen to right character x = " << character->getCharacterX() << " and npc x = " << (*i)->getCharacterX() << std::endl;
+                    seenInt++;
                     return true;
                 }
             }
@@ -178,12 +196,14 @@ bool Environment::isSeen(){
         if((character->getCharacterX() > ((*i)->getCharacterX() - (*i)->getCharacterW())) && (character->getCharacterX() < ((*i)->getCharacterX() + (*i)->getCharacterW()))){
             if((*i)->getNPCDirection() == 3){
                 if(character->getCharacterY() > ((*i)->getCharacterY() - 40) && character->getCharacterY() < (*i)->getCharacterY()){
-                    std::cout << "seen above" << std::endl;
+                    //std::cout << "seen above" << std::endl;
+                    seenInt++;
                     return true;
                 }
             }else if((*i)->getNPCDirection()== 4){
                 if(character->getCharacterY() < ((*i)->getCharacterX() + 40) && character->getCharacterY() > (*i)->getCharacterY()){
-                    std::cout << "seen below" << std::endl;
+                    //std::cout << "seen below" << std::endl;
+                    seenInt++;
                     return true;
                 }
             }
@@ -201,13 +221,3 @@ bool Environment::isCollidingUp(){
 bool Environment::isCollidingDown(){
     return wallCollidingDown;
 }
-
-//void Environment::setCollisionImage(Sprite* building)
-//{
-//    building->setCollisionImage(collisionImage20);
-//}
-
-//void Environment::endGame(int loser) //tells Main game is over and declares winner
-//{
-//    main->endGame(loser);
-//}

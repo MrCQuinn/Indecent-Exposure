@@ -1,12 +1,10 @@
 #include "sprite.hpp"
 
-Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y, int w, int h, CollisionRectangle passed_collision_rect) //Constructor
+Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y, int w, int h) //Constructor
 {
     renderer = passed_renderer;
     image = NULL;
     image = IMG_LoadTexture(renderer, FilePath.c_str());
-    collision_rect = passed_collision_rect;
-    collisionSDLRect = collision_rect.GetRectangle();
     
     if (image == NULL) //error checking
     {
@@ -41,13 +39,11 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
     amount_frame_y = 0;
 }
 
-Sprite::Sprite(SDL_Renderer* passed_renderer, SDL_Texture* passed_image, int x, int y, int w, int h, CollisionRectangle passed_collision_rect)
+Sprite::Sprite(SDL_Renderer* passed_renderer, SDL_Texture* passed_image, int x, int y, int w, int h)
 {
     renderer = passed_renderer;
     image = NULL;
     image = passed_image;
-    collision_rect = passed_collision_rect;
-    collisionSDLRect = collision_rect.GetRectangle();
     
     //location and size
     rect.x = x;
@@ -112,10 +108,6 @@ void Sprite::Animation(int beginFrame, int endFrame, int row, float speed)
 
 void Sprite::Draw()
 {
-    collision_rect.SetX(rect.x);
-    collision_rect.SetY(rect.y);
-    collisionSDLRect = collision_rect.GetRectangle();
-    
     SDL_RenderCopy(renderer, image, &crop, &rect);
 }
 
@@ -162,28 +154,6 @@ int Sprite::GetWidth()
 int Sprite::GetHeight()
 {
     return rect.h;
-}
-
-void Sprite::DisplayRectangle(SDL_Texture* healthBar) //called when Character, Building or Gold is selected
-{
-    collisionImage = healthBar;
-    SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays rectangle
-}
-
-bool Sprite::isColliding(CollisionRectangle collider)
-{
-    return (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > collider.GetRectangle().x &&
-            collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > collider.GetRectangle().y &&
-            collision_rect.GetRectangle().x < collider.GetRectangle().w + collider.GetRectangle().x &&
-            collision_rect.GetRectangle().y < collider.GetRectangle().y + collider.GetRectangle().h);
-}
-
-bool Sprite::isCollidingBuilding(CollisionRectangle collider)
-{
-    return (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > collider.GetRectangle().x+10 && //+10 to allow for a small collision so that units may attack buildings
-            collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > collider.GetRectangle().y+10 &&
-            collision_rect.GetRectangle().x+10 < collider.GetRectangle().w + collider.GetRectangle().x &&
-            collision_rect.GetRectangle().y+10 < collider.GetRectangle().y + collider.GetRectangle().h);
 }
 
 void Sprite::changeImage(SDL_Texture* passed_image)

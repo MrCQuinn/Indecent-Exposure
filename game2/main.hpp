@@ -25,15 +25,12 @@ private:
     
     Character *unit;
     Environment* gameMap;
-    //SubMenu *optionsMenu;
     bool quit;
     bool start;
     bool quitEarly;
-    AI* ai;
-    Sprite* grass;
+    Sprite* splash;
+    Sprite* floor;
     SDL_Setup* sdl_setup;
-    int MouseX;
-    int MouseY;
 };
 
 

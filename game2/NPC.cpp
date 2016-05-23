@@ -2,18 +2,16 @@
 #include "main.hpp"
 #include <math.h>
 
-NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment, int type, int dist) //Constructor
+NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int dist) //Constructor
 {
     
     environment = passed_environment;
     colliding = false;
     
     sdl_setup = passed_SDL_Setup;
-    MouseX = passed_MouseX;
-    MouseY = passed_MouseY;
     
-    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 80, CollisionRectangle(0,0,60,80)); //unit to move around
-    unit->SetUpAnimation(2,4);
+    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 80); //unit to move around
+    unit->SetUpAnimation(4,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     
     prevX = starting_x;
@@ -28,7 +26,10 @@ NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x,
         direction = 1;
     }else if(type == 2){
         direction = 1;
+    }else if(type == 3){
+        direction = 3;
     }
+    
 }
 
 NPC::~NPC() //Destructor
@@ -92,6 +93,18 @@ void NPC::Update()
                 direction = 1;
             }
         }
+    }else if(npcType == 3){//up and down
+        if(direction == 3){
+            if(unit->GetY()<(prevY-npcDist)){
+                prevY = unit->GetY();
+                direction = 4;
+            }
+        }else if(direction == 4){
+            if(unit->GetY()>(prevY+npcDist)){
+                prevY = unit->GetY();
+                direction = 3;
+            }
+        }
     }
 }
 
@@ -134,19 +147,19 @@ void NPC::Animate(){
     {
         if (direction == 3) //Walking up
         {
-            unit->Animation(0,1,0,100); //(start, end, selected animation, speed)
+            unit->Animation(0,3,0,100); //(start, end, selected animation, speed)
             
         } else if (direction == 1) //Walking Left
         {
-            unit->Animation(0,1,1,100);
+            unit->Animation(0,3,1,100);
             
         } else if (direction == 4) //Walking Down
         {
-            unit->Animation(0,1,2,100);
+            unit->Animation(0,3,2,100);
             
         } else //Walking Right
         {
-            unit->Animation(0,1,3,100);
+            unit->Animation(0,3,3,100);
         }
     }
 }

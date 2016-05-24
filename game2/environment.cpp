@@ -36,6 +36,9 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
     NPCPrincipalImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
 
+    //Create item image
+    itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
+    item = new Items(sdl_setup, itemImage, 1200, 700, 32, 32, this);
     
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 300, 400, this, 1, 200));
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));

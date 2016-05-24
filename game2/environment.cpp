@@ -27,6 +27,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 150, 0);
     seenInt = 0;
+    
+    gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 150, 0);
 
     wallCollidingUp = false;
     wallCollidingDown = false;

@@ -1,4 +1,4 @@
-#include "text.hpp"
+ #include "text.hpp"
 
 TextMessage::TextMessage(SDL_Renderer* passed_renderer, std::string message, int x, int y) //Constructor
 {

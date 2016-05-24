@@ -11,7 +11,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     sdl_setup = passed_SDL_Setup;
     
     unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 90); //unit to move around
-    unit->SetUpAnimation(2,4);
+    unit->SetUpAnimation(4,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     
     prevX = starting_x;
@@ -125,19 +125,19 @@ void Character::Animate(){
     {
         if (direction == 3) //Walking up
         {
-            unit->Animation(0,1,0,100); //(start, end, selected animation, speed)
+            unit->Animation(0,3,0,100); //(start, end, selected animation, speed)
             
         } else if (direction == 1) //Walking Left
         {
-            unit->Animation(0,1,1,100);
+            unit->Animation(0,3,1,100);
             
         } else if (direction == 4) //Walking Down
         {
-            unit->Animation(0,1,2,100);
+            unit->Animation(0,3,2,100);
             
         } else //Walking Right
         {
-            unit->Animation(0,1,3,100);
+            unit->Animation(0,3,3,100);
         }
     }
 }

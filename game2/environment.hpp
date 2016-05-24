@@ -49,10 +49,11 @@ private:
     std::vector<Wall*> verticalWallList;
     std::vector<Wall*> aboveWalls;
     std::vector<Wall*> belowWalls;
-    
+    int time;
     TextMessage* timesSeen;
     int seenInt;
-
+    
+    TextMessage* gameTime;
     
 };
 

@@ -123,7 +123,7 @@ void Environment::DrawBack()
             }
         }
     }
-    
+    timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
     
     
 }
@@ -174,9 +174,6 @@ void Environment::Update()
             }
         }
     }
-    
-    timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
-    
 }
 
 bool Environment::isSeen(){

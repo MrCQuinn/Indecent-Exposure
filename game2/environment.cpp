@@ -38,7 +38,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
 
     //Create item image
     itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
-    item = new Items(sdl_setup, itemImage, 1200, 700, 32, 32, this);
+    item = new Items(sdl_setup, itemImage, 110, 510, 32, 32, this);
     
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 300, 400, this, 1, 200));
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
@@ -58,6 +58,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
 Environment::~Environment()
 {
     delete character;
+    delete item;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         delete (*i);
@@ -86,7 +87,7 @@ void Environment::DrawBack()
     //draw everyone
     floorSprite->Draw();
     character->Draw();
-    
+    item->Draw();
     
     //for all vertical walls
     for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)

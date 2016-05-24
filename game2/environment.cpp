@@ -25,10 +25,10 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/verWall.png");
     //verticalWallList.push_back(new Wall(sdl_setup, wallImage, 600, 400, 700, 100, this));
     
-    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 150, 0);
+    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;
     
-    gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 150, 0);
+    gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 750, 2);
 
     wallCollidingUp = false;
     wallCollidingDown = false;
@@ -123,8 +123,9 @@ void Environment::DrawBack()
             }
         }
     }
+    time = (SDL_GetTicks() - startTime)/1000;
     timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
-    
+    gameTime->Draw("Total Game Time: " + std::to_string(time));
     
 }
 

@@ -40,7 +40,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
 
     //Create item image
     itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
-    item = new Items(sdl_setup, itemImage, 110, 510, 32, 32, this);
+    item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
     
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 300, 400, this, 1, 200));
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
@@ -89,7 +89,6 @@ void Environment::DrawBack()
     //draw everyone
     floorSprite->Draw();
     character->Draw();
-    item->Draw();
     
     //for all vertical walls
     for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
@@ -126,6 +125,8 @@ void Environment::DrawBack()
     time = (SDL_GetTicks() - startTime)/1000;
     timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
     gameTime->Draw("Total Game Time: " + std::to_string(time));
+    
+    item->Draw();
     
 }
 

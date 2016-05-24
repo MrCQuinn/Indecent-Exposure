@@ -1,6 +1,7 @@
 #include "environment.hpp"
 #include "main.hpp"
 #include <algorithm>
+#include <string>
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main)
 {

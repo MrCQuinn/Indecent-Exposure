@@ -136,6 +136,15 @@ void Environment::Update()
     wallCollidingDown = false;
     wallCollidingUp = false;
     
+    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
+    {
+        if((((*i)->getWallY())+(.5 * (*i)->getWallH()) < (character->getCharacterY()+(character->getCharacterH()*.5)))){
+            (*i)->setAbove();
+        }else{
+            (*i)->setBelow();
+        }
+    }
+    
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         (*i)->Update();

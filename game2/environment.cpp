@@ -8,7 +8,9 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     sdl_setup = passed_sdl_setup;
     main = passed_main;
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
-    
+	// Zero out blockedPixels
+	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
+
     floorSprite = floor;
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character.png");
@@ -16,11 +18,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/horWall.png");
     
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this));
  
     wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/verWall.png");
     //verticalWallList.push_back(new Wall(sdl_setup, wallImage, 600, 400, 700, 100, this));
@@ -49,7 +51,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     
     //add doors
-    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
+    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
     {
         (*i)->addDoor(650,750);
     }
@@ -65,22 +67,19 @@ Environment::~Environment()
     {
         delete (*i);
     }
-    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
+    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
     {
         delete (*i);
     }
-    for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
-    {
-        delete (*i);
-    }
-    for (std::vector<Wall*>::iterator i = aboveWalls.begin(); i != aboveWalls.end(); ++i)
-    {
-        delete (*i);
-    }
-    for (std::vector<Wall*>::iterator i = belowWalls.begin(); i != belowWalls.end(); ++i)
-    {
-        delete (*i);
-    }
+}
+
+void Environment::addWall(int x1, int y1, int x2, int y2)
+{
+	for (int x = std::min(x1, x2); x<std::max(x1, x2); ++x) {
+		for (int y = std::min(y1, y2); x < std::max(y1, y2); ++y) {
+			blockedPixels[y][x] = true;
+		}
+	}
 }
 
 void Environment::DrawBack()
@@ -90,13 +89,6 @@ void Environment::DrawBack()
     floorSprite->Draw();
     character->Draw();
     
-    //for all vertical walls
-    for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
-    {
-        //draw wall
-        (*i)->Draw();
-    }
-    
     for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j){
         (*j)->Draw();
     }
@@ -104,7 +96,7 @@ void Environment::DrawBack()
     
     
     //for all horizontal walls
-    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
+    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
     {
         //draw wall
         (*i)->Draw();
@@ -141,41 +133,7 @@ void Environment::Update()
     {
         (*i)->Update();
     }
-    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
-    {
-        if(character->getCharacterY()> (*i)->getWallY()){//character is above wall
-            aboveWalls.push_back((*i));
-            belowWalls.erase(std::remove(belowWalls.begin(), belowWalls.end(), (*i)), belowWalls.end());
-            //remove from belowWalls
-        }else if(character->getCharacterY() < (*i)->getWallY()){
-            belowWalls.push_back((*i));
-            aboveWalls.erase(std::remove(aboveWalls.begin(), aboveWalls.end(), (*i)), aboveWalls.end());
-        }
-    }
-    for (std::vector<Wall*>::iterator i = aboveWalls.begin(); i != aboveWalls.end(); ++i)
-    {
-        if(character->getCharacterY() < ((*i)->getWallY() + 10)){//character is below wall
-            wallCollidingUp = true;
-            for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
-            {
-                if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
-                    wallCollidingUp = false;
-                }
-            }
-        }
-    }
-    for (std::vector<Wall*>::iterator i = belowWalls.begin(); i != belowWalls.end(); ++i)
-    {
-        if(character->getCharacterY() > ((*i)->getWallY() - 10)){//character is above wall
-            wallCollidingDown = true;
-            for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
-            {
-                if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
-                    wallCollidingDown = false;
-                }
-            }
-        }
-    }
+	// TODO add collision detection?
 }
 
 bool Environment::isSeen(){

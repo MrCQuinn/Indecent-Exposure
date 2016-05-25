@@ -24,9 +24,6 @@
     <ClCompile Include="..\..\game2\environment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\game2\imports.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\game2\items.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

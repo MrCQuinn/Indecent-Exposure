@@ -18,6 +18,8 @@ class Environment
 public:
     Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main);
     ~Environment();
+
+	void addWall(int x1, int y1, int x2, int y2);
     
     void DrawBack();
     void Update();
@@ -45,10 +47,8 @@ private:
     Items* item;
     Character* character;
     std::vector<NPC*> npcList;
-    std::vector<Wall*> horizontalWallList;
-    std::vector<Wall*> verticalWallList;
-    std::vector<Wall*> aboveWalls;
-    std::vector<Wall*> belowWalls;
+    std::vector<Wall*> wallList;
+	char blockedPixels[768][1024];
     int time;
     TextMessage* timesSeen;
     int seenInt;
@@ -56,5 +56,6 @@ private:
     TextMessage* gameTime;
     
 };
+
 
 #endif // ENVIRONMENT_HPP

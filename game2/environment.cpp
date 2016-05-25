@@ -1,6 +1,7 @@
 #include "environment.hpp"
 #include "main.hpp"
 #include <algorithm>
+#include <string>
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main)
 {
@@ -10,22 +11,25 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     floorSprite = floor;
     
-    characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character.png");
+    characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
     character = new Character(sdl_setup, characterImage, 100, 150, this);
     
-    wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/horWall.png");
+    wallImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/first_piece.png");
+    wallImage2 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/second_piece.png");
+    wallImage3 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/third_piece.png");
+    wallImage4 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fourth_piece.png");
+    wallImage5 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fifth_piece.png");
     
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this));
- 
-    wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/verWall.png");
-    //verticalWallList.push_back(new Wall(sdl_setup, wallImage, 600, 400, 700, 100, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage2, 512, 190, 200 , 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
+    horizontalWallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
     
-    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 150, 0);
+    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;
+    
+    gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 750, 2);
 
     wallCollidingUp = false;
     wallCollidingDown = false;
@@ -35,6 +39,9 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
     NPCPrincipalImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
 
+    //Create item image
+    itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
+    item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
     
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 300, 400, this, 1, 200));
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
@@ -43,9 +50,13 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     
     //add doors
+    int index = 0;
     for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
     {
-        (*i)->addDoor(650,750);
+        if(index == 1){
+            (*i)->addDoor(820,980);
+        }
+        index++;
     }
     
     
@@ -54,6 +65,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
 Environment::~Environment()
 {
     delete character;
+    delete item;
+    delete timesSeen;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         delete (*i);
@@ -62,18 +75,8 @@ Environment::~Environment()
     {
         delete (*i);
     }
-    for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
-    {
-        delete (*i);
-    }
-    for (std::vector<Wall*>::iterator i = aboveWalls.begin(); i != aboveWalls.end(); ++i)
-    {
-        delete (*i);
-    }
-    for (std::vector<Wall*>::iterator i = belowWalls.begin(); i != belowWalls.end(); ++i)
-    {
-        delete (*i);
-    }
+    npcList.clear();
+    horizontalWallList.clear();
 }
 
 void Environment::DrawBack()
@@ -83,19 +86,9 @@ void Environment::DrawBack()
     floorSprite->Draw();
     character->Draw();
     
-    
-    //for all vertical walls
-    for (std::vector<Wall*>::iterator i = verticalWallList.begin(); i != verticalWallList.end(); ++i)
-    {
-        //draw wall
-        (*i)->Draw();
-    }
-    
     for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j){
         (*j)->Draw();
     }
-    
-    
     
     //for all horizontal walls
     for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
@@ -103,8 +96,7 @@ void Environment::DrawBack()
         //draw wall
         (*i)->Draw();
         
-        // if character is in front of wall draw again
-        if((((*i)->getWallY())+(.5 * (*i)->getWallH()) < (character->getCharacterY()+(character->getCharacterH()*.5)))){
+        if((*i)->isAbove()){
             character->Draw();
         }
         
@@ -116,8 +108,11 @@ void Environment::DrawBack()
             }
         }
     }
+    time = (SDL_GetTicks() - startTime)/1000;
+    timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
+    gameTime->Draw("Total Game Time: " + std::to_string(time));
     
-    
+    item->Draw();
     
 }
 
@@ -132,44 +127,38 @@ void Environment::Update()
     {
         (*i)->Update();
     }
+
     for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
     {
-        if(character->getCharacterY()> (*i)->getWallY()){//character is above wall
-            aboveWalls.push_back((*i));
-            belowWalls.erase(std::remove(belowWalls.begin(), belowWalls.end(), (*i)), belowWalls.end());
-            //remove from belowWalls
-        }else if(character->getCharacterY() < (*i)->getWallY()){
-            belowWalls.push_back((*i));
-            aboveWalls.erase(std::remove(aboveWalls.begin(), aboveWalls.end(), (*i)), aboveWalls.end());
+        
+        if((((*i)->getWallY())+(.5 * (*i)->getWallH()) < (character->getCharacterY()+(character->getCharacterH()*.5)))){
+            (*i)->setAbove();
+        }else{
+            (*i)->setBelow();
         }
-    }
-    for (std::vector<Wall*>::iterator i = aboveWalls.begin(); i != aboveWalls.end(); ++i)
-    {
-        if(character->getCharacterY() < ((*i)->getWallY() + 10)){//character is below wall
-            wallCollidingUp = true;
-            for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
-            {
-                if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
-                    wallCollidingUp = false;
+
+        if((*i)->isAbove()){
+            if(character->getCharacterY() < ((*i)->getWallY() + 5)){//character is below wall
+                wallCollidingUp = true;
+                for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
+                {
+                    if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
+                        wallCollidingUp = false;
+                    }
+                }
+            }
+        }else{
+            if(character->getCharacterY() > ((*i)->getWallY()) - 5){//character is above wall
+                wallCollidingDown = true;
+                for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
+                {
+                    if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
+                        wallCollidingDown = false;
+                    }
                 }
             }
         }
     }
-    for (std::vector<Wall*>::iterator i = belowWalls.begin(); i != belowWalls.end(); ++i)
-    {
-        if(character->getCharacterY() > ((*i)->getWallY() - 10)){//character is above wall
-            wallCollidingDown = true;
-            for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
-            {
-                if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
-                    wallCollidingDown = false;
-                }
-            }
-        }
-    }
-    
-    timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
-    
 }
 
 bool Environment::isSeen(){

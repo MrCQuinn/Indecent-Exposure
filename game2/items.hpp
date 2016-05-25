@@ -20,11 +20,15 @@ class Environment;
 class Items
 {
 public:
-    Items(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int h, int w, Environment* passed_environment, int type);
+    Items(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int h, int w, Environment* passed_environment);
     Items() {}
     ~Items();
     
     void Draw();
+    int getItemX();
+    int getItemY();
+    int getItemW();
+    int getItemH();
     
 protected:
     
@@ -32,11 +36,6 @@ protected:
     SDL_Setup* sdl_setup;
     Sprite* unit;
     bool colliding;
-    
-    int prevX;
-    int prevY;
-    
-    
     
 };
 

@@ -58,3 +58,15 @@ int Wall::getWallW(){
 int Wall::getWallH(){
     return unit->GetHeight();
 }
+
+void Wall::setAbove(){
+    above = true;
+}
+
+void Wall::setBelow(){
+    above = false;
+}
+
+bool Wall::isAbove(){
+    return above;
+}

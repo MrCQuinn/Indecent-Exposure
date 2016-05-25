@@ -42,6 +42,9 @@ public:
     int getWallY();
     int getWallW();
     int getWallH();
+    void setAbove();
+    void setBelow();
+    bool isAbove();
     void addDoor(int start, int end);
     std::vector<Door*> doors;
     
@@ -51,6 +54,7 @@ protected:
     SDL_Setup* sdl_setup;
     Sprite* unit;
     bool colliding;
+    bool above;
     
     int prevX;
     int prevY;

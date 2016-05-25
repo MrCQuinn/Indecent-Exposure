@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "wall.hpp"
 #include "NPC.hpp"
+#include "items.hpp"
 #include <vector>
 #include "text.hpp"
 
@@ -37,20 +38,24 @@ private:
     SDL_Texture* NPCBoyImage;
     SDL_Texture* NPCGirlImage;
     SDL_Texture* NPCPrincipalImage;
-    SDL_Texture* wallImage;
+    SDL_Texture* wallImage1;
+    SDL_Texture* wallImage2;
+    SDL_Texture* wallImage3;
+    SDL_Texture* wallImage4;
+    SDL_Texture* wallImage5;
+    SDL_Texture* itemImage;
     bool wallCollidingUp;
     bool wallCollidingDown;
-
+    Items* item;
     Character* character;
     std::vector<NPC*> npcList;
     std::vector<Wall*> horizontalWallList;
-    std::vector<Wall*> verticalWallList;
-    std::vector<Wall*> aboveWalls;
-    std::vector<Wall*> belowWalls;
-    
+    int time;
     TextMessage* timesSeen;
+    TextMessage* gameTime;
     int seenInt;
-
+    
+    
     
 };
 

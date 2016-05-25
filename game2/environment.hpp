@@ -23,6 +23,8 @@ public:
     
     void DrawBack();
     void Update();
+
+	bool PixelIsBlocked(int x, int y);
     
     bool isSeen();
     bool isCollidingUp();
@@ -52,7 +54,7 @@ private:
     Character* character;
     std::vector<NPC*> npcList;
     std::vector<Wall*> wallList;
-	char blockedPixels[768][1024];
+	char blockedPixels[768][1024]; // It's [y][x]
     int time;
     TextMessage* timesSeen;
     TextMessage* gameTime;

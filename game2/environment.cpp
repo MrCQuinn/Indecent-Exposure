@@ -22,22 +22,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     wallImage4 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fourth_piece.png");
     wallImage5 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fifth_piece.png");
     
-<<<<<<< HEAD
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage2, 512, 190, 200 , 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
-    horizontalWallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
-=======
-    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 100, 100, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 300, 100, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 500, 100, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 700, 100, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage, 512, 900, 100, 1024, this));
- 
-    wallImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/verWall.png");
-    //verticalWallList.push_back(new Wall(sdl_setup, wallImage, 600, 400, 700, 100, this));
->>>>>>> 12a5f246b7b542b14d04318ab81cf304d23f57a8
+    wallList.push_back(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage2, 512, 190, 200 , 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
     
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;
@@ -61,20 +50,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     npcList.push_back(new NPC(sdl_setup, NPCGirlImage, 700, 200, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, this, 3, 400));
     
-    
-    //add doors
-<<<<<<< HEAD
-    int index = 0;
-    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
-=======
-    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
->>>>>>> 12a5f246b7b542b14d04318ab81cf304d23f57a8
-    {
-        if(index == 1){
-            (*i)->addDoor(820,980);
-        }
-        index++;
-    }
+    // TODO: Add doors
     
     
 }
@@ -97,6 +73,10 @@ Environment::~Environment()
     wallList.clear();
 }
 
+/*
+ * All pixels in the rectangle formed by points (x1, y1) and (x2, y2)
+ * are marked as "blocked", i.e. there's a wall there
+ */
 void Environment::addWall(int x1, int y1, int x2, int y2)
 {
 	for (int x = std::min(x1, x2); x<std::max(x1, x2); ++x) {
@@ -154,42 +134,14 @@ void Environment::Update()
     {
         (*i)->Update();
     }
-<<<<<<< HEAD
+	// TODO add collision detection
+}
 
-    for (std::vector<Wall*>::iterator i = horizontalWallList.begin(); i != horizontalWallList.end(); ++i)
-    {
-        
-        if((((*i)->getWallY())+(.5 * (*i)->getWallH()) < (character->getCharacterY()+(character->getCharacterH()*.5)))){
-            (*i)->setAbove();
-        }else{
-            (*i)->setBelow();
-        }
-
-        if((*i)->isAbove()){
-            if(character->getCharacterY() < ((*i)->getWallY() + 5)){//character is below wall
-                wallCollidingUp = true;
-                for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
-                {
-                    if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
-                        wallCollidingUp = false;
-                    }
-                }
-            }
-        }else{
-            if(character->getCharacterY() > ((*i)->getWallY()) - 5){//character is above wall
-                wallCollidingDown = true;
-                for (std::vector<Door*>::iterator j = (*i)->doors.begin(); j != (*i)->doors.end(); ++j)
-                {
-                    if(character->getCharacterX() > (*j)->s && character->getCharacterX() < (*j)->e){
-                        wallCollidingDown = false;
-                    }
-                }
-            }
-        }
-    }
-=======
-	// TODO add collision detection?
->>>>>>> 12a5f246b7b542b14d04318ab81cf304d23f57a8
+/*
+ * Returns true if pixel is marked as blocked (i.e. is inside a wall)
+ */
+bool Environment::PixelIsBlocked(int x, int y) {
+	return this->blockedPixels[y][x];
 }
 
 bool Environment::isSeen(){

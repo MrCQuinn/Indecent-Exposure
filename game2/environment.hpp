@@ -32,8 +32,7 @@ public:
 	bool PixelIsBlocked(int x, int y);
     
     bool isSeen();
-    bool isCollidingUp();
-    bool isCollidingDown();
+	static float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
     
 private:
     SDL_Setup* sdl_setup;
@@ -68,7 +67,6 @@ private:
 };
 
 
-float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
 
 
 #endif // ENVIRONMENT_HPP

@@ -41,9 +41,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 750, 2);
 
-    wallCollidingUp = false;
-    wallCollidingDown = false;
-
     //create NPC images here
     NPCBoyImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/b_student_big.png");
     NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
@@ -178,7 +175,7 @@ static float realfmod(float num, float modulus) {
  * Returns the angle towards (outside_x, outside_y) from (center_x, center_y)
  * as if (center_x, center_y) is the middle of a compass
  */
-static float GetAngle(int center_x, int center_y, int outside_x, int outside_y) {
+float Environment::GetAngle(int center_x, int center_y, int outside_x, int outside_y) {
 	int delta_y = outside_y - center_y;
 	int delta_x = outside_x - center_x;
 	float angle = realfmod(atan2(delta_x, delta_y) * 180 / M_PI, 360);
@@ -189,9 +186,6 @@ static float GetAngle(int center_x, int center_y, int outside_x, int outside_y) 
 void Environment::Update()
 {
     character->Update();
-    
-    wallCollidingDown = false;
-    wallCollidingUp = false;
     
     for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
     {
@@ -257,12 +251,4 @@ bool Environment::isSeen(){
     }
     
     return false;
-}
-
-bool Environment::isCollidingUp(){
-    return wallCollidingUp;
-}
-
-bool Environment::isCollidingDown(){
-    return wallCollidingDown;
 }

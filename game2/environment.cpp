@@ -10,6 +10,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
+    
 
     floorSprite = floor;
     
@@ -22,11 +23,14 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     wallImage4 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fourth_piece.png");
     wallImage5 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fifth_piece.png");
     
+
     wallList.push_back(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage2, 512, 190, 200 , 1024, this));
+    wallList.push_back(new Wall(sdl_setup, wallImage2, 512, 190, 200, 1024, this));
     wallList.push_back(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, this));
     wallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
     wallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
+    
+    addWall(0, 0, 1024, 90);
     
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;
@@ -49,7 +53,17 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCGirlImage, 700, 200, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, this, 3, 400));
-    
+
+    //add doors
+//    int index = 0;
+//    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
+//    {
+//        if(index == 1){
+//            (*i)->addDoor(820,980);
+//        }
+//        index++;
+//    }
+
     // TODO: Add doors
     
     
@@ -157,10 +171,20 @@ void Environment::Update()
     wallCollidingDown = false;
     wallCollidingUp = false;
     
+    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
+    {
+        if((((*i)->getWallY())+(.5 * (*i)->getWallH()) < (character->getCharacterY()+(character->getCharacterH()*.5)))){
+            (*i)->setAbove();
+        }else{
+            (*i)->setBelow();
+        }
+    }
+    
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         (*i)->Update();
     }
+
 	// TODO add collision detection
 }
 

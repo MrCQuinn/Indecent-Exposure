@@ -86,21 +86,25 @@ void Character::Move(){
    // if (!colliding){
         if (direction == 1) //left
         {
-            unit->SetX(unit->GetX() - (.5 * 1.5f )); // * 1.5f is speed
+            if(!environment->PixelIsBlocked(unit->GetX() - (.5 * 1.5f ), unit->GetY())){
+                unit->SetX(unit->GetX() - (.5 * 1.5f )); // * 1.5f is speed
+            }
         }
         if (direction == 2) //right
         {
-            unit->SetX(unit->GetX() + (.5 * 1.5f ));
+            if(!environment->PixelIsBlocked(unit->GetX() + (.5 * 1.5f ), unit->GetY())){
+                unit->SetX(unit->GetX() + (.5 * 1.5f ));
+            }
         }
         if (direction == 3) //up
         {
-            if(!environment->isCollidingUp()){
+            if(!environment->PixelIsBlocked(unit->GetX(), unit->GetY() - (.5 * 1.5f ))){
                 unit->SetY(unit->GetY() - (.5 * 1.5f ));
             }
         }
         if (direction == 4) //down
         {
-            if(!environment->isCollidingDown()){
+            if(!environment->PixelIsBlocked(unit->GetX(), unit->GetY() + (.5 * 1.5f ))){
                 unit->SetY(unit->GetY() + (.5 * 1.5f ));
             }
         }

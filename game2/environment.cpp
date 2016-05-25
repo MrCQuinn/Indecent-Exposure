@@ -10,6 +10,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
+    
 
     floorSprite = floor;
     
@@ -28,6 +29,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     wallList.push_back(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, this));
     wallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
     wallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
+    
+    addWall(0, 0, 1024, 90);
     
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;
@@ -50,17 +53,18 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCGirlImage, 700, 200, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, this, 3, 400));
-    
-    
+
     //add doors
-    int index = 0;
-    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
-    {
-        if(index == 1){
-            (*i)->addDoor(820,980);
-        }
-        index++;
-    }
+//    int index = 0;
+//    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
+//    {
+//        if(index == 1){
+//            (*i)->addDoor(820,980);
+//        }
+//        index++;
+//    }
+
+    // TODO: Add doors
     
     
 }
@@ -83,6 +87,10 @@ Environment::~Environment()
     wallList.clear();
 }
 
+/*
+ * All pixels in the rectangle formed by points (x1, y1) and (x2, y2)
+ * are marked as "blocked", i.e. there's a wall there
+ */
 void Environment::addWall(int x1, int y1, int x2, int y2)
 {
 	for (int x = std::min(x1, x2); x<std::max(x1, x2); ++x) {
@@ -150,7 +158,14 @@ void Environment::Update()
         (*i)->Update();
     }
 
-    
+	// TODO add collision detection
+}
+
+/*
+ * Returns true if pixel is marked as blocked (i.e. is inside a wall)
+ */
+bool Environment::PixelIsBlocked(int x, int y) {
+	return this->blockedPixels[y][x];
 }
 
 bool Environment::isSeen(){

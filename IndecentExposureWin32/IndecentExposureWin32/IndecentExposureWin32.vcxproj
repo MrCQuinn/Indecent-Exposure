@@ -86,11 +86,11 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Full</Optimization>
+      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\SDL2-2.0.4\include</AdditionalIncludeDirectories>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,7 +154,6 @@
     <ClCompile Include="..\..\game2\character.cpp" />
     <ClCompile Include="..\..\game2\collision_rectangle.cpp" />
     <ClCompile Include="..\..\game2\environment.cpp" />
-    <ClCompile Include="..\..\game2\imports.cpp" />
     <ClCompile Include="..\..\game2\items.cpp" />
     <ClCompile Include="..\..\game2\main.cpp" />
     <ClCompile Include="..\..\game2\main_function.cpp" />
@@ -163,8 +162,6 @@
     <ClCompile Include="..\..\game2\sprite.cpp" />
     <ClCompile Include="..\..\game2\text.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\SDL2-2.0.4\include</AdditionalIncludeDirectories>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Full</Optimization>
-      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Speed</FavorSizeOrSpeed>
     </ClCompile>
     <ClCompile Include="..\..\game2\wall.cpp" />
   </ItemGroup>

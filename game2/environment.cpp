@@ -107,6 +107,9 @@ void Environment::addWall(int x1, int y1, int x2, int y2)
  * (only for horizontal/vertical movement; no diagonal movement)
  *
  * This is intended for one frame of movement
+ *
+ * BUG: This will segfault if you give it values that are off the screen.
+ * We should fix that. To do so, Environment needs to know how big it is
  */
 bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y) {
 	// If cur_x == new_x, we're moving vertically, else horizontally

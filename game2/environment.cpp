@@ -79,9 +79,36 @@ Environment::~Environment()
  */
 void Environment::addWall(int x1, int y1, int x2, int y2)
 {
-	for (int x = std::min(x1, x2); x<std::max(x1, x2); ++x) {
-		for (int y = std::min(y1, y2); x < std::max(y1, y2); ++y) {
-			blockedPixels[y][x] = true;
+	for (int x = std::min(x1, x2); x<=std::max(x1, x2); ++x) {
+		for (int y = std::min(y1, y2); y <= std::max(y1, y2); ++y) {
+			this->blockedPixels[y][x] = true;
+		}
+	}
+
+}
+
+/*
+ * Returns true if movement from cur position to new position is not blocked
+ * (only for horizontal/vertical movement; no diagonal movement)
+ *
+ * This is intended for one frame of movement
+ */
+bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y) {
+	// If cur_x == new_x, we're moving vertically, else horizontally
+	if (cur_x == new_x) {
+		for (int y = std::min(cur_y, new_y); y <= std::max(cur_y, new_y); ++y) {
+				if (this->blockedPixels[y][cur_x]) {
+					// Pixel is blocked
+					return false;
+				}
+		}
+	} else {
+		// moving horizontally
+		for (int x = std::min(cur_x, new_x); x <= std::max(cur_x, new_x); ++x) {
+			if (this->blockedPixels[cur_y][x]) {
+				// Pixel is blocked
+				return false;
+			}
 		}
 	}
 }

@@ -20,8 +20,13 @@ public:
     ~Environment();
 
 	void addWall(int x1, int y1, int x2, int y2);
-    
-    void DrawBack();
+	/*
+	* Returns true if movement from cur position to new position is not blocked
+	* (only for horizontal/vertical movement; no diagonal movement)
+	*/
+	bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y);
+
+	void DrawBack();
     void Update();
 
 	bool PixelIsBlocked(int x, int y);

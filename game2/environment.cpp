@@ -1,7 +1,10 @@
+#define _USE_MATH_DEFINES // So we can get value of pi from <cmath>
+
 #include "environment.hpp"
 #include "main.hpp"
 #include <algorithm>
 #include <string>
+#include <cmath>
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main)
 {
@@ -10,6 +13,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
+
     
 
     floorSprite = floor;
@@ -162,6 +166,24 @@ void Environment::DrawBack()
     
     item->Draw();
     
+}
+
+
+// The way C/C++'s modulo operator works is dumb and wrong
+static float realfmod(float num, float modulus) {
+	return num >= 0 ? fmod(num, modulus) : modulus + fmod(num, modulus);
+}
+
+/*
+ * Returns the angle towards (outside_x, outside_y) from (center_x, center_y)
+ * as if (center_x, center_y) is the middle of a compass
+ */
+static float GetAngle(int center_x, int center_y, int outside_x, int outside_y) {
+	int delta_y = outside_y - center_y;
+	int delta_x = outside_x - center_x;
+	float angle = realfmod(atan2(delta_x, delta_y) * 180 / M_PI, 360);
+
+	return angle; // FIXME return angle relative to North
 }
 
 void Environment::Update()

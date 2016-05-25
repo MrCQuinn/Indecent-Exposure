@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{075776f6-2d44-4855-aaaa-0cfc0ab36978}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game2\character.cpp">
@@ -46,6 +49,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game2\wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\game2\tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,5 +89,73 @@
     <ClInclude Include="..\..\game2\environment.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\nakedNightmareWorkspace\images\b_student_big.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\back.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\character.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\character_big.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\fifth_piece.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\first_piece.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\firstLevelLayout.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\fourth_piece.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\g_student_sprite.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\grass.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\horWall.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\item.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\left.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\left2.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\principal_sprite.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\right.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\right2.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\second_piece.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\splashScreen.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\straight.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\third_piece.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="..\..\nakedNightmareWorkspace\images\verWall.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

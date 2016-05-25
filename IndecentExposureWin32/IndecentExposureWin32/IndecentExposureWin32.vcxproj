@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\game2\NPC.cpp" />
     <ClCompile Include="..\..\game2\sdl_setup.cpp" />
     <ClCompile Include="..\..\game2\sprite.cpp" />
+    <ClCompile Include="..\..\game2\tests.cpp" />
     <ClCompile Include="..\..\game2\text.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\SDL2-2.0.4\include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -177,6 +178,30 @@
     <ClInclude Include="..\..\game2\sprite.hpp" />
     <ClInclude Include="..\..\game2\text.hpp" />
     <ClInclude Include="..\..\game2\wall.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\nakedNightmareWorkspace\images\back.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\b_student_big.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\character.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\character_big.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\fifth_piece.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\firstLevelLayout.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\first_piece.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\fourth_piece.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\grass.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\g_student_sprite.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\horWall.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\item.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\left.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\left2.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\principal_sprite.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\right.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\right2.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\second_piece.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\splashScreen.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\straight.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\third_piece.png" />
+    <Image Include="..\..\nakedNightmareWorkspace\images\verWall.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

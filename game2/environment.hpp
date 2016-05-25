@@ -53,8 +53,6 @@ private:
     SDL_Texture* wallImage4;
     SDL_Texture* wallImage5;
     SDL_Texture* itemImage;
-    bool wallCollidingUp;
-    bool wallCollidingDown;
     Items* item;
     Character* character;
     std::vector<NPC*> npcList;
@@ -68,6 +66,9 @@ private:
     
     
 };
+
+
+float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
 
 
 #endif // ENVIRONMENT_HPP

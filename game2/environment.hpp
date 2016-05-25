@@ -20,15 +20,19 @@ public:
     ~Environment();
 
 	void addWall(int x1, int y1, int x2, int y2);
-    
-    void DrawBack();
+	/*
+	* Returns true if movement from cur position to new position is not blocked
+	* (only for horizontal/vertical movement; no diagonal movement)
+	*/
+	bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y);
+
+	void DrawBack();
     void Update();
 
 	bool PixelIsBlocked(int x, int y);
     
     bool isSeen();
-    bool isCollidingUp();
-    bool isCollidingDown();
+	static float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
     
 private:
     SDL_Setup* sdl_setup;
@@ -48,8 +52,6 @@ private:
     SDL_Texture* wallImage4;
     SDL_Texture* wallImage5;
     SDL_Texture* itemImage;
-    bool wallCollidingUp;
-    bool wallCollidingDown;
     Items* item;
     Character* character;
     std::vector<NPC*> npcList;
@@ -63,6 +65,8 @@ private:
     
     
 };
+
+
 
 
 #endif // ENVIRONMENT_HPP

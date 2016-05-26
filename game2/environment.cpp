@@ -2,6 +2,7 @@
 
 #include "environment.hpp"
 #include "main.hpp"
+#include "Point.hpp"
 #include <algorithm>
 #include <string>
 #include <cmath>
@@ -99,6 +100,14 @@ void Environment::addWall(int x1, int y1, int x2, int y2)
 			this->blockedPixels[y][x] = true;
 		}
 	}
+
+}
+
+/*
+ * Returns true if there exists a line of sight between these two points
+ * (i.e. no walls in the way)
+ */
+bool Environment::LineOfSightExists(int x1, int y1, int x2, int y2) {
 
 }
 

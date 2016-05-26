@@ -20,6 +20,12 @@ public:
     ~Environment();
 
 	void addWall(int x1, int y1, int x2, int y2);
+
+	/*
+	* Returns true if there exists a line of sight between these two points
+	* (i.e. no walls in the way)
+	*/
+	bool LineOfSightExists(int x1, int y1, int x2, int y2);
 	/*
 	* Returns true if movement from cur position to new position is not blocked
 	* (only for horizontal/vertical movement; no diagonal movement)

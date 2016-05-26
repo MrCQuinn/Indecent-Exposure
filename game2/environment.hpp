@@ -15,6 +15,7 @@ class Main;
 
 class Environment
 {
+    friend NPC;
 public:
     Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main);
     ~Environment();

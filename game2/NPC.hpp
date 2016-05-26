@@ -28,6 +28,7 @@ public:
     int getCharacterW();
     int getCharacterH();
     int getNPCDirection();
+    bool canSeePlayer();
     
 protected:
     

@@ -108,7 +108,18 @@ void Environment::addWall(int x1, int y1, int x2, int y2)
  * (i.e. no walls in the way)
  */
 bool Environment::LineOfSightExists(int x1, int y1, int x2, int y2) {
-
+    Point start = Point(x1, y1);
+    Point end = Point(x2, y2);
+    BresenhamPointIterator bpi = BresenhamPointIterator(&start, &end);
+    for (Point curPixel = bpi.getNext();; curPixel = bpi.getNext()) {
+        if (PixelIsBlocked(curPixel.x, curPixel.y)) {
+            return false;
+        }
+        if (curPixel.x == x2 && curPixel.y == y2) {
+            break;
+        }
+    }
+    return true;
 }
 
 /*
@@ -185,7 +196,9 @@ static float realfmod(float num, float modulus) {
 
 /*
  * Returns the angle towards (outside_x, outside_y) from (center_x, center_y)
- * as if (center_x, center_y) is the middle of a compass
+ * like (center_x, center_y) is the center of a compass
+ *
+ * So North is 0 degrees, East is 90, etc.
  */
 float Environment::GetAngle(int center_x, int center_y, int outside_x, int outside_y) {
 	int delta_y = outside_y - center_y;

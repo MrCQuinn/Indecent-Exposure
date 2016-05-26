@@ -1,6 +1,6 @@
 #include "Point.hpp"
 
-Point::Point(int x, int y)
+Point::Point(int x=0, int y=0)
 {
 	this->x = x;
 	this->y = y;
@@ -17,6 +17,7 @@ Point Point::switchToOctZero(Point *p, int cur_octant) {
         case 6: return Point(-p->y, p->x);
         case 7: return Point(p->x, -p->y);
     }
+    return Point(0, 0);
 }
 
 BresenhamPointIterator::BresenhamPointIterator(Point* start, Point* end)
@@ -105,4 +106,5 @@ Point BresenhamPointIterator::getNext()
         case 6: return Point(old_y, -old_x);
         case 7: return Point(old_x, -old_y);
     }
+    return Point(0, 0); // This return should never be reached
 }

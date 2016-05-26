@@ -1,5 +1,6 @@
 #include "NPC.hpp"
 #include "main.hpp"
+#include "Point.hpp"
 #include <math.h>
 
 NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int dist) //Constructor
@@ -189,7 +190,57 @@ void NPC::setDirection(int d)
     }
 }
 
+/*
+ *  Direction numbers:
+ *       3
+ *      /|\
+ *  1 <--+--> 2
+ *      \|/
+ *       4
+ */
 int NPC::getNPCDirection(){
     return direction;
+}
+
+bool NPC::canSeePlayer()
+{
+    int player_x = environment->character->getCharacterX();
+    int player_y = environment->character->getCharacterY();
+    int our_x = this->getCharacterX();
+    int our_y = this->getCharacterY();
+    int delta_x = player_x - our_x;
+    int delta_y = player_y - our_y;
+    // Find what octant the player is in relative to the NPC:
+    int octant = BresenhamPointIterator::get_octant(delta_x, delta_y);
+
+    // Only bother checking line of sight if the NPC if facing player:
+    bool facingPlayer = false;
+    int NPCDirection = this->getNPCDirection();
+    if (NPCDirection == 2) {
+        // NPC facing right
+        if (octant == 0 || octant == 7) {
+            facingPlayer = true;
+        }
+    } else if (NPCDirection == 3) {
+        // NPC facing up
+        if (octant == 1 || octant == 2) {
+            facingPlayer = true;
+        }
+    } else if (NPCDirection == 1) {
+        // NPC facing left
+        if (octant == 3 || octant == 4) {
+            facingPlayer = true;
+        }
+    } else {
+        // NPC facing down
+        if (octant == 5 || octant == 6) {
+            facingPlayer = true;
+        }
+    }
+
+    if (facingPlayer) {
+        return environment->LineOfSightExists(our_x, our_y, player_x, player_y);
+    }
+    return false;
 }
 

@@ -31,7 +31,7 @@ public:
 	* Returns true if movement from cur position to new position is not blocked
 	* (only for horizontal/vertical movement; no diagonal movement)
 	*/
-	bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y);
+	bool MoveAllowed(int cur_x, int cur_y, int new_x, int new_y);
 
 	void DrawBack();
     void Update();

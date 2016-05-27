@@ -10,6 +10,10 @@ Main::Main() //Constructor
     quitEarly = true;
     sdl_setup = new SDL_Setup(&quit);
     level = 1;
+    startTime = 0;
+    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: ", 782, 20);
+    
+    gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(SDL_GetTicks()), 750, 2);
 }
 
 Main::~Main() //Destructor
@@ -18,6 +22,8 @@ Main::~Main() //Destructor
     delete sdl_setup;
     delete levelOne;
     delete splash;
+    delete timesSeen;
+    delete gameTime;
     
     SDL_Quit();
 }
@@ -53,6 +59,7 @@ void Main::GameLoop()
             }
             if(sdl_setup->GetEv()->key.keysym.sym == SDLK_s){
                 start = true;
+                startTime = SDL_GetTicks();
             }
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
             {
@@ -76,6 +83,8 @@ void Main::GameLoop()
     floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
     levelOne = new Environment(sdl_setup, floor, this);
     levelTwo = new Environment(sdl_setup, floor, this);
+    
+    
     
     //level 1 stuff
     
@@ -113,10 +122,10 @@ void Main::GameLoop()
     levelOne->addWall(270, 450, 338, 595);//vertwall
     levelOne->addWall(270, 570, 1080, 595); // fourth wall
     
-    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 470, 100, levelOne, 2, 100));
+    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 470, 100, levelOne, 2, 100));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 185, 360, levelOne, 3, 165));
-    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 150));
-    //levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760));
+    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 150));
+    levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
     
@@ -138,6 +147,9 @@ void Main::GameLoop()
             levelOne->DrawBack();
         
             levelOne->Update();
+            
+            gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
+            timesSeen->Draw("Times seen: " + std::to_string(levelOne->timesSeen()));
             
             if(levelOne->isComplete()){
                 level++;

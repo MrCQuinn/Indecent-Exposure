@@ -22,7 +22,7 @@ NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x,
     npcType = type;
     npcDist = dist;
     
-    speed = 3;
+    speed = 2;
     
     
     if(type== 1){

@@ -43,6 +43,7 @@ public:
 	static float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
     bool isComplete();
     bool backLevel();
+    int timesSeen();
     
     void addWallpaper(Wall* wall);
     void addNPC(NPC* npc);
@@ -52,21 +53,15 @@ private:
     Main* main;
     Sprite* floorSprite;
     SDL_Texture* wallSprite;
-    
-    int startTime;
     bool showMenu;
     SDL_Texture* characterImage;
     SDL_Texture* itemImage;
     Items* item;
     Character* character;
+    int caughtCount;
     std::vector<NPC*> npcList;
     std::vector<Wall*> wallList;
 	bool blockedPixels[768][1024]; // It's [y][x]
-    int time;
-    TextMessage* timesSeen;
-    TextMessage* gameTime;
-    int seenInt;
-    
     
     
     

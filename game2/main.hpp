@@ -27,6 +27,7 @@ private:
     Environment* levelOne;
     Environment* levelTwo;
     int level;
+    int startTime;
     bool quit;
     bool start;
     bool quitEarly;
@@ -49,6 +50,9 @@ private:
     SDL_Texture* NPCBoyImage;
     SDL_Texture* NPCGirlImage;
     SDL_Texture* NPCPrincipalImage;
+    
+    TextMessage* timesSeen;
+    TextMessage* gameTime;
 };
 
 

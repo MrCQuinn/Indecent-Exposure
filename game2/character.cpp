@@ -14,7 +14,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     unit->SetUpAnimation(4,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     
-    speed = 6;
+    speed = 4;
     
     prevX = starting_x;
     prevY = starting_y;

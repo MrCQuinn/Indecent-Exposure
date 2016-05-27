@@ -11,20 +11,14 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
 {
     sdl_setup = passed_sdl_setup;
     main = passed_main;
-    startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
+    caughtCount = 0;
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
-    
     floorSprite = floor;
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
-    character = new Character(sdl_setup, characterImage, 90, 100, this);
+    character = new Character(sdl_setup, characterImage, 90, 80, this);
     
-    timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
-    seenInt = 0;
-    
-    gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 750, 2);
-
     //Create item image
     itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
     item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
@@ -39,8 +33,8 @@ Environment::~Environment()
 {
     delete character;
     delete item;
-    delete timesSeen;
-    delete gameTime;
+    //delete timesSeen;
+    //delete gameTime;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         delete (*i);
@@ -146,12 +140,13 @@ void Environment::DrawBack()
             }
         }
     }
-    time = (SDL_GetTicks() - startTime)/1000;
-    //timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
-    //gameTime->Draw("Total Game Time: " + std::to_string(time));
     
     item->Draw();
     
+}
+
+int Environment::timesSeen(){
+    return caughtCount;
 }
 
 
@@ -173,6 +168,13 @@ float Environment::GetAngle(int center_x, int center_y, int outside_x, int outsi
 
 	return angle;
 }
+
+/*
+ * Runs every frame and updates the state of the game
+ * determines the order to draw level parts
+ *
+ *  Updates Character and all NPCs
+ */
 
 void Environment::Update()
 {
@@ -206,7 +208,7 @@ bool Environment::isSeen(){
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         if ((*i)->canSeePlayer()) {
-            seenInt++;
+            caughtCount++;
             return true;
         }
     }

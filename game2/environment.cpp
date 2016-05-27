@@ -238,43 +238,14 @@ bool Environment::PixelIsBlocked(int x, int y) {
 	return this->blockedPixels[y][x];
 }
 
+// Iterates through all NPCs, checking if they can see the player
 bool Environment::isSeen(){
     //for all npc's
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
-        if((*i)->getNPCDirection() < 3){
-        if((character->getCharacterY() > ((*i)->getCharacterY() - (*i)->getCharacterH())) && (character->getCharacterY() < ((*i)->getCharacterY() + (*i)->getCharacterH()))){
-            if((*i)->getNPCDirection() == 1){
-                if(character->getCharacterX() > ((*i)->getCharacterX() - (*i)->getCharacterW() - 40) && character->getCharacterX() < (*i)->getCharacterX()){
-                    //std::cout << "seen to left character x = " << character->getCharacterX() << " and npc x = " << (*i)->getCharacterX() << std::endl;
-                    seenInt++;
-                    return true;
-                }
-            }else if((*i)->getNPCDirection()== 2){
-                if(character->getCharacterX() < ((*i)->getCharacterX() + (*i)->getCharacterW() + 40) && character->getCharacterX() > (*i)->getCharacterX()){
-                    //std::cout << "seen to right character x = " << character->getCharacterX() << " and npc x = " << (*i)->getCharacterX() << std::endl;
-                    seenInt++;
-                    return true;
-                }
-            }
+        if ((*i)->canSeePlayer()) {
+            return true;
         }
-    }else{
-        if((character->getCharacterX() > ((*i)->getCharacterX() - (*i)->getCharacterW())) && (character->getCharacterX() < ((*i)->getCharacterX() + (*i)->getCharacterW()))){
-            if((*i)->getNPCDirection() == 3){
-                if(character->getCharacterY() > ((*i)->getCharacterY() - 40) && character->getCharacterY() < (*i)->getCharacterY()){
-                    //std::cout << "seen above" << std::endl;
-                    seenInt++;
-                    return true;
-                }
-            }else if((*i)->getNPCDirection()== 4){
-                if(character->getCharacterY() < ((*i)->getCharacterX() + 40) && character->getCharacterY() > (*i)->getCharacterY()){
-                    //std::cout << "seen below" << std::endl;
-                    seenInt++;
-                    return true;
-                }
-            }
-        }
-    }
     }
     
     return false;

@@ -18,6 +18,7 @@ class Environment
     friend NPC;
 public:
     Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main);
+    Environment();
     ~Environment();
 
 	void addWall(int x1, int y1, int x2, int y2);

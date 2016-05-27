@@ -21,9 +21,16 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     stopAnimation = false;
 }
 
+// For creating test character and not rendering
+Character::Character(Environment *e) {
+    environment = e;
+}
+
 Character::~Character() //Destructor
 {
-    delete unit;
+    if (unit != NULL) {
+        delete unit;
+    }
 }
 
 void Character::Draw()

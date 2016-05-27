@@ -30,6 +30,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
 }
 
+// Constructor for creating test environment without rendering:
+Environment::Environment() {
+    character = new Character(this);
+}
+
 Environment::~Environment()
 {
     delete character;

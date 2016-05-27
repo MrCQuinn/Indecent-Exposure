@@ -35,7 +35,7 @@ bool testOctantDetection() {
     octResults[5] = BresenhamPointIterator::get_octant(-1, -2);
     octResults[6] = BresenhamPointIterator::get_octant(1, -2);
     octResults[7] = BresenhamPointIterator::get_octant(2, -1);
-    bool isgood;
+    bool isgood = true;
     for (int i = 0; i < 8; ++i) {
         std::cout << "octant " << i << " was: " << octResults[i] << "\n";
         if (octResults[i] != i) {

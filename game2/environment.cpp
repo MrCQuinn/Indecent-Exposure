@@ -14,9 +14,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
-
     
-
     floorSprite = floor;
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
@@ -149,6 +147,7 @@ bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y) {
 			}
 		}
 	}
+    return true;
 }
 
 void Environment::DrawBack()

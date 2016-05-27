@@ -21,6 +21,12 @@ Main::~Main() //Destructor
 
 void Main::GameLoop()
 {
+    /*
+     * Creates a splash screen and draws it to the screen
+     * listens for spacebar or escape
+     * Spacebar starts the game, escape starts and quits game
+     */
+    
     splash = new Sprite(sdl_setup->GetRenderer(), "images/splashScreen.png", 0, 0, 1024, 768); //splash screen
     while (!start)
     {
@@ -41,6 +47,13 @@ void Main::GameLoop()
         sdl_setup->End();
     }
 
+    /*
+     * initializes floor sprite
+     * initializes environment for level 1
+     *
+     * draws and then updates the level object until user quits or ends program
+     */
+    
     
     floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
     gameMap = new Environment(sdl_setup, floor, this);

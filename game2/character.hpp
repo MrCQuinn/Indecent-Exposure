@@ -14,8 +14,6 @@ public:
     Character() {}
     ~Character();
     
-
-    double GetDistance(int x1, int y1, int x2, int y2);
     virtual void Update();
     void Draw();
     Sprite* GetCharacter() { return unit; }
@@ -39,6 +37,11 @@ protected:
     bool stopAnimation;
     int direction;
     bool moving;
+    
+    int newX;
+    int newY;
+    
+    int speed;
     
     bool isSeen();
     

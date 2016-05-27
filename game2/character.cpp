@@ -14,6 +14,8 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     unit->SetUpAnimation(4,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     
+    speed = 3;
+    
     prevX = starting_x;
     prevY = starting_y;
     stopAnimation = false;
@@ -22,14 +24,6 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
 Character::~Character() //Destructor
 {
     delete unit;
-}
-
-double Character::GetDistance(int x1, int y1, int x2, int y2)
-{ //used for unit to take most direct path to target
-    double differenceX = x1 - x2;
-    double differenceY = y1 - y2;
-    double distance = sqrt((differenceX * differenceX) + (differenceY * differenceY));
-    return distance;
 }
 
 void Character::Draw()
@@ -83,43 +77,27 @@ bool Character::isSeen(){
 }
 
 void Character::Move(){
-   // if (!colliding){
         if (direction == 1) //left
         {
-            if(!environment->PixelIsBlocked(unit->GetX() - (.5 * 1.5f ), unit->GetY())){
-                unit->SetX(unit->GetX() - (.5 * 1.5f )); // * 1.5f is speed
-            }
+            newX = unit->GetX() - speed;
         }
         if (direction == 2) //right
         {
-            if(!environment->PixelIsBlocked(unit->GetX() + (.5 * 1.5f ), unit->GetY())){
-                unit->SetX(unit->GetX() + (.5 * 1.5f ));
-            }
+            newX = unit->GetX() + speed;
         }
         if (direction == 3) //up
         {
-            if(!environment->PixelIsBlocked(unit->GetX(), unit->GetY() - (.5 * 1.5f ))){
-                unit->SetY(unit->GetY() - (.5 * 1.5f ));
-            }
+            newY = unit->GetY() + speed;
         }
         if (direction == 4) //down
         {
-            if(!environment->PixelIsBlocked(unit->GetX(), unit->GetY() + (.5 * 1.5f ))){
-                unit->SetY(unit->GetY() + (.5 * 1.5f ));
-            }
+            newY = unit->GetY() - speed;
         }
-    //}
-    if(unit->GetX()>1024){
-        unit->SetX(0);
-    }
-    if(unit->GetX()<0){
-        unit->SetX(1024);
-    }
-    if(unit->GetY()>768){
-        unit->SetY(0);
-    }
-    if(unit->GetY()<0){
-        unit->SetY(768);
+    
+    
+    if(environment->MoveAllowed(unit->GetX(), unit->GetY(), newX + (unit->GetWidth()/2), unit->GetY() + unit->GetHeight()/2)){
+        unit->SetX(newX); // * 1.5f is speed
+        unit->SetY(newY);
     }
 }
 

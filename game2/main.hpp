@@ -3,10 +3,7 @@
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
-//#include "character.hpp"
 #include "environment.hpp"
-//#include "submenu.hpp"
-//#include "ai.hpp"
 
 class Environment;
 class AI;

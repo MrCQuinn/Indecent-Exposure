@@ -38,9 +38,6 @@ protected:
     int direction;
     bool moving;
     
-    int newX;
-    int newY;
-    
     int speed;
     
     bool isSeen();

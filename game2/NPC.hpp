@@ -44,6 +44,7 @@ protected:
     bool moving;
     int npcType;
     int npcDist;
+    int speed;
     
 };
 

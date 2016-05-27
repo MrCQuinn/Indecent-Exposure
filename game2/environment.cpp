@@ -241,12 +241,12 @@ bool Environment::PixelIsBlocked(int x, int y) {
 // Iterates through all NPCs, checking if they can see the player
 bool Environment::isSeen(){
     //for all npc's
-    for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
-    {
-        if ((*i)->canSeePlayer()) {
-            return true;
-        }
-    }
+//    for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
+//    {
+//        if ((*i)->canSeePlayer()) {
+//            return true;
+//        }
+//    }
     
     return false;
 }

@@ -14,7 +14,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
     unit->SetUpAnimation(4,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2);
     
-    speed = 3;
+    speed = 6;
     
     prevX = starting_x;
     prevY = starting_y;
@@ -41,7 +41,11 @@ void Character::Update()
     //collidingUp = environment->isCollidingUp(unit->GetY());
     
     Animate();
-    Move();    // Moves the character
+    
+    if(direction > 0){
+        Move();    // Moves the character
+    }
+    
     
     
     if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
@@ -77,6 +81,9 @@ bool Character::isSeen(){
 }
 
 void Character::Move(){
+    int newX = unit->GetX();
+    int newY = unit->GetY();
+    
         if (direction == 1) //left
         {
             newX = unit->GetX() - speed;
@@ -87,18 +94,20 @@ void Character::Move(){
         }
         if (direction == 3) //up
         {
-            newY = unit->GetY() + speed;
+            newY = unit->GetY() - speed;
         }
         if (direction == 4) //down
         {
-            newY = unit->GetY() - speed;
+            newY = unit->GetY() + speed;
         }
     
     
-    if(environment->MoveAllowed(unit->GetX(), unit->GetY(), newX + (unit->GetWidth()/2), unit->GetY() + unit->GetHeight()/2)){
-        unit->SetX(newX); // * 1.5f is speed
-        unit->SetY(newY);
-    }
+        if(environment->MoveAllowed(unit->GetX(), unit->GetY(), newX, newY)){
+            unit->SetX(newX); // * 1.5f is speed
+            unit->SetY(newY);
+        }
+    //std::cout << "new X: " << newX << "\n";
+    //std::cout << "new Y: " << newY << "\n";
 }
 
 void Character::Animate(){

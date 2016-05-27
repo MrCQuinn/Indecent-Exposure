@@ -12,6 +12,7 @@ class Character
 public:
     Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment);
     Character() {}
+    Character(Environment * e);
     ~Character();
     
     virtual void Update();

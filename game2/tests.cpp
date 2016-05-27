@@ -62,3 +62,10 @@ bool testBresenham() {
     std::cout << std::endl;
 }
 */
+
+// Test that line of sight works by setting up a game but not rendering it or advancing time:
+/*
+bool testLineOfSight() {
+    Environment env = Environment();
+}
+*/

@@ -35,6 +35,11 @@ NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x,
     
 }
 
+// For creating test environments without rendering
+NPC::NPC(Environment* e) {
+    environment = e;
+}
+
 NPC::~NPC() //Destructor
 {
     delete unit;

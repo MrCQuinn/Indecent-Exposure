@@ -50,4 +50,17 @@ bool testOctantDetection() {
     }
     return isgood;
 }
-
+/*
+// Test that the Bresenham algorithm gives the correct points
+bool testBresenham() {
+    // Draw a line pointing West and see if it works:
+    BresenhamPointIterator west = BresenhamPointIterator(&Point(0, 0), &Point(-3, 0));
+    int eastResults[4][2];
+    for (Point curPixel = west.getNext(), int i=4; i<4; curPixel = west.getNext(), ++i) {
+        eastResults[i][0] = curPixel.x;
+        eastResults[i][1] = curPixel.y;
+        std::cout << "West " << i << ": (" << curPixel.x << ", " << curPixel.y << ")\n";
+    }
+    std::cout << std::endl;
+}
+*/

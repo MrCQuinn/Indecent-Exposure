@@ -7,9 +7,8 @@ Main::Main() //Constructor
     SDL_Init(SDL_INIT_EVERYTHING); //Initialize everything in SDL
     quit = false; //boolean for game loop
     start = false;
-    quitEarly = true;
     sdl_setup = new SDL_Setup(&quit);
-    level = 1;
+    level = 0;
     startTime = 0;
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: ", 782, 20);
     
@@ -179,33 +178,29 @@ void Main::GameLoop()
     levelTwo->addWall(915, 160, 1080, 300);// vert locker 1
     levelTwo->addWall(915, 400, 1080, 535);//vert locker 2
     
+    levels[0] = levelOne;
+    levels[1] = levelTwo;
+    
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {
         timeOfNextUpdate = SDL_GetTicks() + 17;
         
         sdl_setup->Begin();
         
-        if(level == 1){
-            levelOne->DrawBack();
+        levels[level]->DrawBack();
+        levels[level]->Update();
         
-            levelOne->Update();
+        gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
+        timesSeen->Draw("Times seen: " + std::to_string(levels[level]->timesSeen()));
             
-            gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
-            timesSeen->Draw("Times seen: " + std::to_string(levelOne->timesSeen()));
-            
-            if(levelOne->isComplete()){
-                level++;
-            }
-        }else if(level == 2){
-            levelTwo->DrawBack();
-            
-            levelTwo->Update();
+        if(levels[level]->isComplete()){
+            level++;
         }
         
         //Listen for "q" to quit
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
         {
-            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
             {
                 endGame();
             }

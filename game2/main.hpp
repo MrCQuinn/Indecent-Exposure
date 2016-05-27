@@ -27,11 +27,11 @@ private:
     Character *unit;
     Environment* levelOne;
     Environment* levelTwo;
+    Environment* levels[2];
     int level;
     int startTime;
     bool quit;
     bool start;
-    bool quitEarly;
     Sprite* splash;
     Sprite* floor;
     SDL_Setup* sdl_setup;

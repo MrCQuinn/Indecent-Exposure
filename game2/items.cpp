@@ -14,7 +14,7 @@
 Items::Items(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int h, int w, Environment* passed_environment) //Constructor
 {
     environment = passed_environment;
-    colliding = true;
+    pickedup = false;
     
     sdl_setup = passed_SDL_Setup;
     
@@ -49,3 +49,13 @@ int Items::getItemW(){
 int Items::getItemH(){
     return unit->GetHeight();
 }
+
+void Items::pickup(){
+    pickedup = true;
+}
+
+bool Items::gotten(){
+    return pickedup;
+}
+
+

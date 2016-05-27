@@ -7,17 +7,20 @@
 #include <string>
 #include <cmath>
 
-Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main)
+Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main, int i)
 {
     sdl_setup = passed_sdl_setup;
     main = passed_main;
     caughtCount = 0;
+    itemsCollected = 0;
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
     floorSprite = floor;
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
     character = new Character(sdl_setup, characterImage, 90, 80, this);
+    
+    itemCount = i;
 }
 
 // Constructor for creating test environment without rendering:
@@ -63,6 +66,16 @@ void Environment::addWall(int x1, int y1, int x2, int y2)
 		}
 	}
 
+}
+
+void Environment::destroyWall(int x1, int y1, int x2, int y2)
+{
+    for (int x = std::min(x1, x2); x<=std::max(x1, x2); ++x) {
+        for (int y = std::min(y1, y2); y <= std::max(y1, y2); ++y) {
+            this->blockedPixels[y][x] = false;
+        }
+    }
+    
 }
 
 /*
@@ -123,7 +136,9 @@ void Environment::DrawBack()
     //draw items
     for (std::vector<Items*>::iterator i = itemList.begin(); i != itemList.end(); ++i)
     {
-        (*i)->Draw();
+        if(!(*i)->gotten()){
+            (*i)->Draw();
+        }
     }
     
     //draw character
@@ -210,13 +225,18 @@ void Environment::Update()
     //check for item pickup
     for (std::vector<Items*>::iterator i = itemList.begin(); i != itemList.end(); ++i)
     {
-//        if(character->getCharacterX() > ((*i)getItemX - ((*i)->getItemW()/2)) && character->getCharacterX() < ((*i)->getItemX() + ((*i)->getItemW()/2))){
-//            
-//        }
+        if(!(*i)->gotten()){
+            if(character->getCharacterX() > ((*i)->getItemX() - ((*i)->getItemW()/2)) && character->getCharacterX() < ((*i)->getItemX() + ((*i)->getItemW()/2))){
+                if(character->getCharacterY() > ((*i)->getItemY() - ((*i)->getItemH()/2)) && character->getCharacterY() < ((*i)->getItemY() + ((*i)->getItemH()/2))){
+                    (*i)->pickup();
+                    itemsCollected++;
+                    if(itemsCollected == itemCount){
+                        destroyWall(980, 645, 1080, 715);
+                    }
+                }
+            }
+        }
     }
-    
-    
-
     
 }
 

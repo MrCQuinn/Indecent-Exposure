@@ -88,8 +88,8 @@ void Main::GameLoop()
     long timeLeft;
     
     floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
-    levelOne = new Environment(sdl_setup, floor, this);
-    levelTwo = new Environment(sdl_setup, floor, this);
+    levelOne = new Environment(sdl_setup, floor, this, 2);
+    levelTwo = new Environment(sdl_setup, floor, this, 1);
     
     //level 1 stuff
     
@@ -114,7 +114,7 @@ void Main::GameLoop()
     levelOne->addWall(0, 0, 1024, 90);// top wall
     levelOne->addWall(0,0, 30, 768);//left wall
     levelOne->addWall(0,744, 1024, 768); //bottom wall
-    levelOne->addWall(980, 90, 1080, 645); //right wall
+    levelOne->addWall(980, 90, 1080, 768); //right wall
     //levelOne->addWall(980, 645, 1080, 768); //right wall 2
     levelOne->addWall(270, 85, 337, 125);  //part of first doorway
     levelOne->addWall(270, 180, 337, 288); //part of first doorway

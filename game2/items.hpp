@@ -29,13 +29,15 @@ public:
     int getItemY();
     int getItemW();
     int getItemH();
+    void pickup();
+    bool gotten();
     
 protected:
     
     Environment* environment;
     SDL_Setup* sdl_setup;
     Sprite* unit;
-    bool colliding;
+    bool pickedup;
     
 };
 

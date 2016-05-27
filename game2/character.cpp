@@ -102,7 +102,7 @@ void Character::Move(){
         }
     
     
-        if(environment->MoveAllowed(unit->GetX(), unit->GetY(), newX, newY)){
+        if(environment->MoveAllowed(unit->GetX(), (unit->GetY()+(unit->GetHeight()/2)), newX, (newY+(unit->GetHeight()/2)))){
             unit->SetX(newX); // * 1.5f is speed
             unit->SetY(newY);
         }

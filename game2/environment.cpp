@@ -20,8 +20,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     character = new Character(sdl_setup, characterImage, 90, 80, this);
     
     //Create item image
-    itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
-    item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
+    item1Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShoes.png");
+    shoesItem = new Items(sdl_setup, item1Image, 375, 480, 64, 64, this);
+    
+    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
+    pantsItem = new Items(sdl_setup, item2Image, 930, 675, 64, 64, this);
 }
 
 // Constructor for creating test environment without rendering:
@@ -32,7 +35,8 @@ Environment::Environment() {
 Environment::~Environment()
 {
     delete character;
-    delete item;
+    delete shoesItem;
+    delete pantsItem;
     //delete timesSeen;
     //delete gameTime;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
@@ -141,7 +145,8 @@ void Environment::DrawBack()
         }
     }
     
-    item->Draw();
+    pantsItem->Draw();
+    shoesItem->Draw();
     
 }
 

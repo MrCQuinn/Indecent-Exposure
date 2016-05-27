@@ -55,8 +55,10 @@ private:
     SDL_Texture* wallSprite;
     bool showMenu;
     SDL_Texture* characterImage;
-    SDL_Texture* itemImage;
-    Items* item;
+    SDL_Texture* item1Image;
+    SDL_Texture* item2Image;
+    Items* shoesItem;
+    Items* pantsItem;
     Character* character;
     int caughtCount;
     std::vector<NPC*> npcList;

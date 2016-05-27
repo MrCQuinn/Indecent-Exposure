@@ -3,8 +3,6 @@
 //  game2
 //
 //  Created by Portia Seater on 5/22/16.
-//  Copyright © 2016 SDL_Squad. All rights reserved.
-//
 
 #ifndef power_ups_hpp
 #define power_ups_hpp
@@ -29,13 +27,15 @@ public:
     int getItemY();
     int getItemW();
     int getItemH();
+    void pickup();
+    bool gotten();
     
 protected:
     
     Environment* environment;
     SDL_Setup* sdl_setup;
     Sprite* unit;
-    bool colliding;
+    bool pickedup;
     
 };
 

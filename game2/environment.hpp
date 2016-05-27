@@ -17,11 +17,12 @@ class Environment
 {
     friend NPC;
 public:
-    Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main);
+    Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main, int i);
     Environment();
     ~Environment();
 
 	void addWall(int x1, int y1, int x2, int y2);
+    void destroyWall(int x1, int y1, int x2, int y2);
 
 	/*
 	* Returns true if there exists a line of sight between these two points
@@ -58,6 +59,8 @@ private:
     SDL_Texture* wallSprite;
     SDL_Texture* characterImage;
     
+    int itemCount;
+    int itemsCollected;
     Character* character;
     int caughtCount;
     std::vector<Items*> itemList;

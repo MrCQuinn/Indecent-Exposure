@@ -184,6 +184,7 @@
     <ClInclude Include="..\..\game2\Point.hpp" />
     <ClInclude Include="..\..\game2\sdl_setup.hpp" />
     <ClInclude Include="..\..\game2\sprite.hpp" />
+    <ClInclude Include="..\..\game2\tests.hpp" />
     <ClInclude Include="..\..\game2\text.hpp" />
     <ClInclude Include="..\..\game2\wall.hpp" />
   </ItemGroup>

@@ -95,6 +95,9 @@
     <ClInclude Include="..\..\game2\Point.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\game2\tests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\nakedNightmareWorkspace\images\b_student_big.png">

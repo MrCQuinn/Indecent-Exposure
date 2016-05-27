@@ -39,11 +39,14 @@ NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x,
 // For creating test environments without rendering
 NPC::NPC(Environment* e) {
     environment = e;
+    unit = NULL;
 }
 
 NPC::~NPC() //Destructor
 {
-    delete unit;
+    if (unit != NULL) {
+        delete unit;
+    }
 }
 
 double NPC::GetDistance(int x1, int y1, int x2, int y2)

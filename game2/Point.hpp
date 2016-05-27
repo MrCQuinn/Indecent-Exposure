@@ -5,7 +5,7 @@
 class Point
 {
 public:
-    Point(int x, int y);
+    Point(int x = 0, int y = 0);
     static Point switchToOctZero(Point * p, int cur_octant);
     int x;
     int y;
@@ -19,7 +19,7 @@ public:
  */
 class BresenhamPointIterator {
 public:
-    BresenhamPointIterator(Point* start, Point* end);
+    BresenhamPointIterator(Point* start_point, Point* end_point);
     static int get_octant(int delta_x, int delta_y);
     Point getNext();
 private:

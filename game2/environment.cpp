@@ -23,6 +23,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
 // Constructor for creating test environment without rendering:
 Environment::Environment() {
     character = new Character(this);
+    // Zero out blockedPixels
+    std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
 }
 
 Environment::~Environment()

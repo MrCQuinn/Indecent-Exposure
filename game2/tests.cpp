@@ -1,6 +1,4 @@
-#include "environment.hpp"
-#include <string>
-#include "point.hpp"
+#include "tests.hpp"
 
 // All tests return true if success, false if failure
 
@@ -14,7 +12,7 @@ bool testAngleMeasure() {
 	std::cout << "E: " + std::to_string(east) + "\n";
 	std::cout << "S: " + std::to_string(south) + "\n";
 	std::cout << "W: " + std::to_string(west) + "\n";
-	if (north != 0 | east != 90 | south != 180 | west != 270) {
+	if (north != 0 || east != 90 || south != 180 || west != 270) {
 		std::cout << "ANGLE TEST FAILED!!!" << std::endl;
 		return false;
 	}

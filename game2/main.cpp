@@ -20,6 +20,11 @@ Main::~Main() //Destructor
     SDL_Quit();
 }
 
+void Main::runTests() {
+    testAngleMeasure();
+    testOctantDetection();
+}
+
 void Main::GameLoop()
 {
     /*
@@ -34,6 +39,11 @@ void Main::GameLoop()
         sdl_setup->Begin();
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
         {
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_d)
+            {
+                this->runTests();
+            }
+
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE)
             {
                 start = true;

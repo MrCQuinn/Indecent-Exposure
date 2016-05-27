@@ -218,7 +218,7 @@ float Environment::GetAngle(int center_x, int center_y, int outside_x, int outsi
 	int delta_x = outside_x - center_x;
 	float angle = realfmod(atan2(delta_x, delta_y) * 180 / M_PI, 360);
 
-	return angle; // FIXME return angle relative to North
+	return angle;
 }
 
 void Environment::Update()
@@ -238,8 +238,6 @@ void Environment::Update()
     {
         (*i)->Update();
     }
-
-	// TODO add collision detection
 }
 
 /*
@@ -255,6 +253,7 @@ bool Environment::isSeen(){
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         if ((*i)->canSeePlayer()) {
+            seenInt++;
             return true;
         }
     }

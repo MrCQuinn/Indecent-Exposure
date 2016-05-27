@@ -44,8 +44,9 @@ private:
     SDL_Texture* wallImage6;
     SDL_Texture* wallImage7;
     SDL_Texture* wallImage8;
-    SDL_Texture* wallImage9;
-    SDL_Texture* wallImage10;
+    SDL_Texture* doublelocker;
+    SDL_Texture* locker;
+    SDL_Texture* vertlocker;
     
     SDL_Texture* NPCBoyImage;
     SDL_Texture* NPCGirlImage;

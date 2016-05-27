@@ -206,7 +206,7 @@ int NPC::getNPCDirection(){
 bool NPC::canSeePlayer()
 {
     int player_x = environment->character->getCharacterX();
-    int player_y = environment->character->getCharacterY();
+    int player_y = (environment->character->getCharacterY()+(environment->character->getCharacterH()/2));
     int our_x = this->getCharacterX();
     int our_y = this->getCharacterY();
     int delta_x = player_x - our_x;

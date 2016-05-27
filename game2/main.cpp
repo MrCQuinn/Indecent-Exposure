@@ -77,6 +77,8 @@ void Main::GameLoop()
     levelOne = new Environment(sdl_setup, floor, this);
     levelTwo = new Environment(sdl_setup, floor, this);
     
+    //level 1 stuff
+    
     //create level 1 wall stickers here
     wallImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/first_piece.png");
     wallImage2 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/second_piece.png");
@@ -116,6 +118,15 @@ void Main::GameLoop()
     //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 150));
     //levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
+    
+    
+    //level 2 stuff
+    
+    wallImage6 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/secondLevelLayout.png");
+    
+    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage6, 512, 359, 768, 1024, levelTwo));
+    
+    
     
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {

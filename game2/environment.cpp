@@ -28,9 +28,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     //Create item image
     itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
     item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
-    
-
-    
 }
 
 Environment::~Environment()

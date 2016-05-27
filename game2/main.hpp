@@ -40,6 +40,12 @@ private:
     SDL_Texture* wallImage4;
     SDL_Texture* wallImage5;
     
+    SDL_Texture* wallImage6;
+    SDL_Texture* wallImage7;
+    SDL_Texture* wallImage8;
+    SDL_Texture* wallImage9;
+    SDL_Texture* wallImage10;
+    
     SDL_Texture* NPCBoyImage;
     SDL_Texture* NPCGirlImage;
     SDL_Texture* NPCPrincipalImage;

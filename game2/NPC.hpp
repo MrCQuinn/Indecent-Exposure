@@ -10,7 +10,7 @@ class Environment;
 class NPC
 {
 public:
-    NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int dist);
+    NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int distx, int disty);
     NPC() {}
     NPC(Environment * e);
     ~NPC();
@@ -43,7 +43,8 @@ protected:
     int direction;
     bool moving;
     int npcType;
-    int npcDist;
+    int npcDistx;
+    int npcDisty;
     int speed;
     
 };

@@ -3,7 +3,7 @@
 #include "Point.hpp"
 #include <math.h>
 
-NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int dist) //Constructor
+NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, Environment* passed_environment, int type, int distx, int disty) //Constructor
 {
     
     environment = passed_environment;
@@ -20,7 +20,8 @@ NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x,
     stopAnimation = false;
     
     npcType = type;
-    npcDist = dist;
+    npcDistx = distx;
+    npcDisty = disty;
     
     speed = 2;
     
@@ -69,46 +70,46 @@ void NPC::Update()
     
     if(npcType == 1){//back and forth
         if(direction == 1){
-            if(unit->GetX()<(prevX-npcDist)){
+            if(unit->GetX()<(prevX-npcDistx)){
                 prevX = unit->GetX();
                 direction = 2;
             }
         }else if(direction == 2){
-            if(unit->GetX()>(prevX+npcDist)){
+            if(unit->GetX()>(prevX+npcDistx)){
                 prevX = unit->GetX();
                 direction = 1;
             }
         }
     }else if(npcType == 2){//circle
         if(direction == 1){
-            if(unit->GetX()<(prevX-npcDist)){
+            if(unit->GetX()<(prevX-npcDistx)){
                 prevX = unit->GetX();
                 direction = 4;
             }
         }else if(direction == 2){
-            if(unit->GetX()>(prevX+npcDist)){
+            if(unit->GetX()>(prevX+npcDistx)){
                 prevX = unit->GetX();
                 direction = 3;
             }
         }else if(direction == 4){
-            if(unit->GetY()>(prevY+npcDist)){
+            if(unit->GetY()>(prevY+npcDisty)){
                 prevY = unit->GetY();
                 direction = 2;
             }
         }else if(direction == 3){
-            if(unit->GetY()<(prevY-npcDist)){
+            if(unit->GetY()<(prevY-npcDisty)){
                 prevY = unit->GetY();
                 direction = 1;
             }
         }
     }else if(npcType == 3){//up and down
         if(direction == 3){
-            if(unit->GetY()<(prevY-npcDist)){
+            if(unit->GetY()<(prevY-npcDisty)){
                 prevY = unit->GetY();
                 direction = 4;
             }
         }else if(direction == 4){
-            if(unit->GetY()>(prevY+npcDist)){
+            if(unit->GetY()>(prevY+npcDisty)){
                 prevY = unit->GetY();
                 direction = 3;
             }

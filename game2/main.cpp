@@ -122,10 +122,10 @@ void Main::GameLoop()
     levelOne->addWall(270, 450, 338, 595);//vertwall
     levelOne->addWall(270, 570, 1080, 595); // fourth wall
     
-    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 470, 100, levelOne, 2, 100));
+    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 770, 100, levelOne, 2, 400, 100));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 185, 360, levelOne, 3, 165));
-    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 150));
-    levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760));
+    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 0,200));
+    levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
     

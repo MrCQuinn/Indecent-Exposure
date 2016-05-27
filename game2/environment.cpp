@@ -33,7 +33,21 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     wallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
     wallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
     
-    addWall(0, 0, 1024, 90);
+    addWall(0, 0, 1024, 90);// top wall
+    addWall(0,0, 30, 768);//left wall
+    addWall(0,744, 1024, 768); //bottom wall
+    addWall(980, 90, 1080, 768); //right wall
+    addWall(270, 85, 337, 125);  //part of first doorway
+    addWall(270, 180, 337, 288); //part of first doorway
+    addWall(757, 85, 823, 125);  //part of second doorway
+    addWall(757, 180, 823, 288); //part of second doorway
+    addWall(0,285,820, 290);//second horizontal wall
+    addWall(270, 445, 461, 461); //first part of third wall
+    addWall(508, 445, 800, 461); //second part of third wall
+    addWall(844, 445, 1080, 461); //third part of third wall
+    addWall(270, 450, 338, 595);//vertwall
+    addWall(270, 500, 1080, 595); // fourth wall
+    
     
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;

@@ -1,5 +1,6 @@
 #include "main.hpp"
-#include <math.h>
+#include <cmath>
+#include <thread>
 
 Main::Main() //Constructor
 {
@@ -57,10 +58,14 @@ void Main::GameLoop()
     
     floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
     gameMap = new Environment(sdl_setup, floor, this);
-    
+    long timeOfNextUpdate;
+    long timeLeft;
+
     
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {
+        timeOfNextUpdate = SDL_GetTicks() + 17;
+        
         sdl_setup->Begin();
         
         gameMap->DrawBack();
@@ -68,11 +73,16 @@ void Main::GameLoop()
         gameMap->Update();
         
         sdl_setup->End();
+        
+        timeLeft = timeOfNextUpdate - SDL_GetTicks();
+        if(timeLeft > 0){
+            std::this_thread::sleep_for(std::chrono::milliseconds(timeLeft));
+        }
     }
 }
 
 void Main::endGame(int loser)
 {
-    quitEarly = false; //winner decided, so allow display of endgame screen
+    quitEarly = false; 
     quit = true;
 }

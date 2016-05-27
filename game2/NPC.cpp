@@ -22,6 +22,8 @@ NPC::NPC(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x,
     npcType = type;
     npcDist = dist;
     
+    speed = 3;
+    
     
     if(type== 1){
         direction = 1;
@@ -110,36 +112,29 @@ void NPC::Update()
 }
 
 void NPC::Move(){
-    if (!colliding){
-        if (direction == 1) //left
-        {
-            unit->SetX(unit->GetX() - (.5 * .5f )); // * .5f is speed
-        }
-        if (direction == 2) //right
-        {
-            unit->SetX(unit->GetX() + (.5 * .5f ));
-        }
-        if (direction == 3) //up
-        {
-            unit->SetY(unit->GetY() - (.5 * .5f ));
-        }
-        if (direction == 4) //down
-        {
-            unit->SetY(unit->GetY() + (.5 * .5f ));
-        }
+    int newX = unit->GetX();
+    int newY = unit->GetY();
+    
+    if (direction == 1) //left
+    {
+        newX = unit->GetX() - speed;
     }
-    if(unit->GetX()>1024){
-        unit->SetX(0);
+    if (direction == 2) //right
+    {
+        newX = unit->GetX() + speed;
     }
-    if(unit->GetX()<0){
-        unit->SetX(1024);
+    if (direction == 3) //up
+    {
+        newY = unit->GetY() - speed;
     }
-    if(unit->GetY()>768){
-        unit->SetY(0);
+    if (direction == 4) //down
+    {
+        newY = unit->GetY() + speed;
     }
-    if(unit->GetY()<0){
-        unit->SetY(768);
-    }
+    
+    unit->SetX(newX);
+    unit->SetY(newY);
+
 }
 
 void NPC::Animate(){

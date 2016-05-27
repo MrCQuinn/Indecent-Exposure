@@ -20,7 +20,6 @@ public:
     void Draw();
     Sprite* GetCharacter() { return unit; }
     void Animate();
-    void Select();
     void Move();
     virtual void setDirection(int d);
     int getCharacterX();
@@ -44,6 +43,7 @@ protected:
     bool moving;
     int npcType;
     int npcDist;
+    int speed;
     
 };
 

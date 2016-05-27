@@ -50,7 +50,7 @@ bool testOctantDetection() {
     }
     return isgood;
 }
-
+/*
 // Test that the Bresenham algorithm gives the correct points
 bool testBresenham() {
     // Draw a line pointing West and see if it works:
@@ -63,4 +63,4 @@ bool testBresenham() {
     }
     std::cout << std::endl;
 }
-
+*/

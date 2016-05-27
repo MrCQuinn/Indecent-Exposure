@@ -122,18 +122,31 @@ void Main::GameLoop()
     levelOne->addWall(270, 450, 338, 595);//vertwall
     levelOne->addWall(270, 570, 1080, 595); // fourth wall
     
-    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 770, 100, levelOne, 2, 400, 100));
+    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 700, 100, levelOne, 2, 350, 100));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 185, 360, levelOne, 3, 165));
-    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 0,200));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 700, levelOne, 3, 0,400));
     levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
     
     //level 2 stuff
     
-    wallImage6 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/secondLevelLayout.png");
+    wallImage6 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/first_piece_2.png");
+    wallImage7 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/second_piece_2.png");
+    wallImage8 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/third_piece_2.png");
+    doublelocker = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/double_locker.png");
+    locker = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/locker.png");
     
-    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage6, 512, 359, 768, 1024, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage6, 512, 45, 90, 1024, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage7, 512, 189, 198, 1024, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage8, 512, 528, 480, 1024, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, doublelocker, 410, 100, 111, 308, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, doublelocker, 600, 380, 111, 308, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, locker, 605, 240, 111, 160, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, locker, 335, 515, 111, 160, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, locker, 550, 515, 111, 160, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, locker, 413, 640, 111, 160, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, locker, 625, 640, 111, 160, levelTwo));
     
     
     

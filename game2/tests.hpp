@@ -12,5 +12,9 @@ bool testAngleMeasure();
 
 bool testOctantDetection();
 
+bool testLineOfSight();
+
+bool testCollision();
+
 
 #endif // TESTS_HPP

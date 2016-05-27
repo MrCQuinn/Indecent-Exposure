@@ -34,9 +34,15 @@ Environment::Environment() {
 
 Environment::~Environment()
 {
-    delete character;
-    delete shoesItem;
-    delete pantsItem;
+    if (character != NULL) {
+        delete character;
+    }
+    if (shoesItem != NULL) {
+        delete shoesItem;
+    }
+    if (pantsItem != NULL) {
+        delete pantsItem;
+    }
     //delete timesSeen;
     //delete gameTime;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
@@ -241,5 +247,15 @@ void Environment::addWallpaper(Wall* wall){
 
 void Environment::addNPC(NPC* npc){
     npcList.push_back(npc);
+}
+
+Character * Environment::getCharPointer()
+{
+    return this->character;
+}
+
+std::vector<NPC*>* Environment::getNPCVector()
+{
+    return &(this->npcList);
 }
 

@@ -31,6 +31,9 @@ Main::~Main() //Destructor
 void Main::runTests() {
     testAngleMeasure();
     testOctantDetection();
+    testLineOfSight();
+    testCollision();
+    exit(0);
 }
 
 void Main::GameLoop()

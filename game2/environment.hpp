@@ -47,6 +47,8 @@ public:
     
     void addWallpaper(Wall* wall);
     void addNPC(NPC* npc);
+    Character *getCharPointer();
+    std::vector<NPC*>* getNPCVector();
     
 private:
     SDL_Setup* sdl_setup;

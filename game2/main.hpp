@@ -5,6 +5,7 @@
 #include "sprite.hpp"
 #include "environment.hpp"
 #include "tests.hpp"
+#include "items.hpp"
 
 class Environment;
 class AI;
@@ -19,7 +20,7 @@ public:
     
     void GameLoop();
     double GetDistance(int x1, int y1, int x2, int y2);
-    void endGame(int loser);
+    void endGame();
     
 private:
     
@@ -54,6 +55,9 @@ private:
     
     TextMessage* timesSeen;
     TextMessage* gameTime;
+    
+    SDL_Texture* item1Image;
+    SDL_Texture* item2Image;
 };
 
 

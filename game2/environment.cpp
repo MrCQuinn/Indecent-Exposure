@@ -18,13 +18,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
     character = new Character(sdl_setup, characterImage, 90, 80, this);
-    
-    //Create item image
-    item1Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShoes.png");
-    shoesItem = new Items(sdl_setup, item1Image, 375, 480, 64, 64, this);
-    
-    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
-    pantsItem = new Items(sdl_setup, item2Image, 930, 675, 64, 64, this);
 }
 
 // Constructor for creating test environment without rendering:
@@ -35,10 +28,6 @@ Environment::Environment() {
 Environment::~Environment()
 {
     delete character;
-    delete shoesItem;
-    delete pantsItem;
-    //delete timesSeen;
-    //delete gameTime;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         delete (*i);
@@ -48,8 +37,15 @@ Environment::~Environment()
     {
         delete (*i);
     }
+    
+    for (std::vector<Items*>::iterator i = itemList.begin(); i != itemList.end(); ++i)
+    {
+        delete (*i);
+    }
+    
     npcList.clear();
     wallList.clear();
+    itemList.clear();
 }
 
 /*
@@ -118,10 +114,19 @@ bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y) {
 void Environment::DrawBack()
 {
     
-    //draw everyone
+    //draw floor
     floorSprite->Draw();
+    
+    //draw items
+    for (std::vector<Items*>::iterator i = itemList.begin(); i != itemList.end(); ++i)
+    {
+        (*i)->Draw();
+    }
+    
+    //draw character
     character->Draw();
     
+    //draw NPC
     for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j){
         (*j)->Draw();
     }
@@ -145,14 +150,11 @@ void Environment::DrawBack()
         }
     }
     
-    pantsItem->Draw();
-    shoesItem->Draw();
+    
     
 }
 
-int Environment::timesSeen(){
-    return caughtCount;
-}
+
 
 
 // The way C/C++'s modulo operator works is dumb and wrong
@@ -183,8 +185,10 @@ float Environment::GetAngle(int center_x, int center_y, int outside_x, int outsi
 
 void Environment::Update()
 {
+    //update character
     character->Update();
     
+    //Update walls to position relative to character
     for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
     {
         if((((*i)->getWallY())+(.5 * (*i)->getWallH()) < (character->getCharacterY()+(character->getCharacterH()*.5)))){
@@ -194,10 +198,30 @@ void Environment::Update()
         }
     }
     
+    //Update all NPCs
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         (*i)->Update();
     }
+    
+    //check for item pickup
+    for (std::vector<Items*>::iterator i = itemList.begin(); i != itemList.end(); ++i)
+    {
+//        if(character->getCharacterX() > ((*i)getItemX - ((*i)->getItemW()/2)) && character->getCharacterX() < ((*i)->getItemX() + ((*i)->getItemW()/2))){
+//            
+//        }
+    }
+    
+    
+    //Listen for "q" to quit
+    if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
+    {
+        if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
+        {
+            main->endGame();
+        }
+    }
+    
 }
 
 /*
@@ -228,11 +252,8 @@ bool Environment::isComplete(){
     return false;
 }
 
-bool Environment::backLevel(){
-    if(character->getCharacterX() < 0){
-        return true;
-    }
-    return false;
+int Environment::timesSeen(){
+    return caughtCount;
 }
 
 void Environment::addWallpaper(Wall* wall){
@@ -241,5 +262,8 @@ void Environment::addWallpaper(Wall* wall){
 
 void Environment::addNPC(NPC* npc){
     npcList.push_back(npc);
+}
+void Environment::addItem(Items* item){
+    itemList.push_back(item);
 }
 

@@ -47,20 +47,18 @@ public:
     
     void addWallpaper(Wall* wall);
     void addNPC(NPC* npc);
+    void addItem(Items* item);
     
 private:
     SDL_Setup* sdl_setup;
     Main* main;
     Sprite* floorSprite;
     SDL_Texture* wallSprite;
-    bool showMenu;
     SDL_Texture* characterImage;
-    SDL_Texture* item1Image;
-    SDL_Texture* item2Image;
-    Items* shoesItem;
-    Items* pantsItem;
+    
     Character* character;
     int caughtCount;
+    std::vector<Items*> itemList;
     std::vector<NPC*> npcList;
     std::vector<Wall*> wallList;
 	bool blockedPixels[768][1024]; // It's [y][x]

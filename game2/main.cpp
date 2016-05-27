@@ -14,6 +14,10 @@ Main::Main() //Constructor
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: ", 782, 20);
     
     gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(SDL_GetTicks()), 750, 2);
+    
+    //Create item image
+    item1Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShoes.png");
+    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
 }
 
 Main::~Main() //Destructor
@@ -84,8 +88,6 @@ void Main::GameLoop()
     levelOne = new Environment(sdl_setup, floor, this);
     levelTwo = new Environment(sdl_setup, floor, this);
     
-    
-    
     //level 1 stuff
     
     //create level 1 wall stickers here
@@ -127,6 +129,9 @@ void Main::GameLoop()
     //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 700, levelOne, 3, 0,400));
     levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
+    
+    levelOne->addItem(new Items(sdl_setup, item1Image, 375, 480, 64, 64, levelOne));
+    levelOne->addItem(new Items(sdl_setup, item2Image, 930, 675, 64, 64, levelOne));
     
     
     //level 2 stuff
@@ -192,10 +197,6 @@ void Main::GameLoop()
             levelTwo->DrawBack();
             
             levelTwo->Update();
-            
-            if(levelTwo->backLevel()){
-                level--;
-            }
         }
         
         
@@ -208,8 +209,7 @@ void Main::GameLoop()
     }
 }
 
-void Main::endGame(int loser)
+void Main::endGame()
 {
-    quitEarly = false; 
     quit = true;
 }

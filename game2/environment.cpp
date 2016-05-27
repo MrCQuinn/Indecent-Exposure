@@ -67,19 +67,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCGirlImage, 700, 200, this, 2, 200));
     npcList.push_back(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, this, 3, 400));
-
-    //add doors
-//    int index = 0;
-//    for (std::vector<Wall*>::iterator i = wallList.begin(); i != wallList.end(); ++i)
-//    {
-//        if(index == 1){
-//            (*i)->addDoor(820,980);
-//        }
-//        index++;
-//    }
-
-    // TODO: Add doors
-    
     
 }
 
@@ -238,8 +225,6 @@ void Environment::Update()
     {
         (*i)->Update();
     }
-
-	// TODO add collision detection
 }
 
 /*

@@ -16,6 +16,7 @@ Main::~Main() //Destructor
     //avoids memory leaks
     delete sdl_setup;
     delete gameMap;
+    delete splash;
     
     SDL_Quit();
 }
@@ -36,6 +37,10 @@ void Main::GameLoop()
         {
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE)
             {
+                delete splash;
+                splash = new Sprite(sdl_setup->GetRenderer(), "images/InstructionSplash.png", 0, 0, 1024, 768);
+            }
+            if(sdl_setup->GetEv()->key.keysym.sym == SDLK_s){
                 start = true;
             }
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)

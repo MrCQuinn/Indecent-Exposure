@@ -58,6 +58,7 @@ private:
     
     SDL_Texture* item1Image;
     SDL_Texture* item2Image;
+    SDL_Texture* item3Image;
 };
 
 

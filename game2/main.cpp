@@ -16,7 +16,8 @@ Main::Main() //Constructor
     
     //Create item image
     item1Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShoes.png");
-    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
+    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShirt.png");
+    item3Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
 }
 
 Main::~Main() //Destructor
@@ -132,8 +133,8 @@ void Main::GameLoop()
     levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
-    levelOne->addItem(new Items(sdl_setup, item1Image, 375, 480, 64, 64, levelOne));
-    levelOne->addItem(new Items(sdl_setup, item2Image, 930, 675, 64, 64, levelOne));
+    levelOne->addItem(new Items(sdl_setup, item1Image, 375, 480, 64, 64, levelOne)); //Shoes sprite
+    levelOne->addItem(new Items(sdl_setup, item2Image, 930, 675, 64, 64, levelOne)); //Shirt sprite
     
     
     //level 2 stuff
@@ -178,6 +179,8 @@ void Main::GameLoop()
     levelTwo->addWall(915, 160, 1080, 300);// vert locker 1
     levelTwo->addWall(915, 400, 1080, 535);//vert locker 2
     
+    levelTwo->addItem(new Items(sdl_setup, item3Image, 930, 675, 64, 64, levelTwo)); //Pants sprite
+
     levels[0] = levelOne;
     levels[1] = levelTwo;
     

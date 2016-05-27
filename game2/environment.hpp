@@ -40,6 +40,10 @@ public:
     
     bool isSeen();
 	static float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
+    bool isComplete();
+    
+    void addWallpaper(Wall* wall);
+    void addNPC(NPC* npc);
     
 private:
     SDL_Setup* sdl_setup;
@@ -50,14 +54,6 @@ private:
     int startTime;
     bool showMenu;
     SDL_Texture* characterImage;
-    SDL_Texture* NPCBoyImage;
-    SDL_Texture* NPCGirlImage;
-    SDL_Texture* NPCPrincipalImage;
-    SDL_Texture* wallImage1;
-    SDL_Texture* wallImage2;
-    SDL_Texture* wallImage3;
-    SDL_Texture* wallImage4;
-    SDL_Texture* wallImage5;
     SDL_Texture* itemImage;
     Items* item;
     Character* character;
@@ -68,6 +64,7 @@ private:
     TextMessage* timesSeen;
     TextMessage* gameTime;
     int seenInt;
+    
     
     
     

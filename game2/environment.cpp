@@ -18,55 +18,18 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* pass
     floorSprite = floor;
     
     characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
-    character = new Character(sdl_setup, characterImage, 100, 150, this);
-    
-    wallImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/first_piece.png");
-    wallImage2 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/second_piece.png");
-    wallImage3 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/third_piece.png");
-    wallImage4 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fourth_piece.png");
-    wallImage5 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fifth_piece.png");
-    
-
-    wallList.push_back(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage2, 512, 190, 200, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, this));
-    wallList.push_back(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, this));
-    
-    addWall(0, 0, 1024, 90);// top wall
-    addWall(0,0, 30, 768);//left wall
-    addWall(0,744, 1024, 768); //bottom wall
-    addWall(980, 90, 1080, 768); //right wall
-    addWall(270, 85, 337, 125);  //part of first doorway
-    addWall(270, 180, 337, 288); //part of first doorway
-    addWall(757, 85, 823, 125);  //part of second doorway
-    addWall(757, 180, 823, 288); //part of second doorway
-    addWall(0,285,820, 290);//second horizontal wall
-    addWall(270, 445, 461, 461); //first part of third wall
-    addWall(508, 445, 800, 461); //second part of third wall
-    addWall(844, 445, 1080, 461); //third part of third wall
-    addWall(270, 450, 338, 595);//vertwall
-    addWall(270, 500, 1080, 595); // fourth wall
-    
+    character = new Character(sdl_setup, characterImage, 90, 100, this);
     
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: " + std::to_string(seenInt), 782, 20);
     seenInt = 0;
     
     gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(startTime), 750, 2);
 
-    //create NPC images here
-    NPCBoyImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/b_student_big.png");
-    NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
-    NPCPrincipalImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
-
     //Create item image
     itemImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/item.png");
     item = new Items(sdl_setup, itemImage, 975, 610, 32, 32, this);
     
-    npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 300, 400, this, 1, 200));
-    npcList.push_back(new NPC(sdl_setup, NPCBoyImage, 500, 400, this, 2, 200));
-    npcList.push_back(new NPC(sdl_setup, NPCGirlImage, 700, 200, this, 2, 200));
-    npcList.push_back(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, this, 3, 400));
+
     
 }
 
@@ -75,6 +38,7 @@ Environment::~Environment()
     delete character;
     delete item;
     delete timesSeen;
+    delete gameTime;
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         delete (*i);
@@ -155,8 +119,8 @@ void Environment::DrawBack()
 {
     
     //draw everyone
-    floorSprite->Draw();
-    character->Draw();
+    //floorSprite->Draw();
+    //character->Draw();
     
     for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j){
         (*j)->Draw();
@@ -181,8 +145,8 @@ void Environment::DrawBack()
         }
     }
     time = (SDL_GetTicks() - startTime)/1000;
-    timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
-    gameTime->Draw("Total Game Time: " + std::to_string(time));
+    //timesSeen->Draw("Times Seen: " + std::to_string((int)seenInt));
+    //gameTime->Draw("Total Game Time: " + std::to_string(time));
     
     item->Draw();
     
@@ -246,3 +210,19 @@ bool Environment::isSeen(){
     
     return false;
 }
+
+bool Environment::isComplete(){
+    if(character->getCharacterX() > 1080){
+        return true;
+    }
+    return false;
+}
+
+void Environment::addWallpaper(Wall* wall){
+    wallList.push_back(wall);
+}
+
+void Environment::addNPC(NPC* npc){
+    npcList.push_back(npc);
+}
+

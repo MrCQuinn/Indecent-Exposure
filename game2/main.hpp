@@ -21,13 +21,24 @@ public:
 private:
     
     Character *unit;
-    Environment* gameMap;
+    Environment* levelOne;
+    int level;
     bool quit;
     bool start;
     bool quitEarly;
     Sprite* splash;
     Sprite* floor;
     SDL_Setup* sdl_setup;
+    
+    SDL_Texture* wallImage1;
+    SDL_Texture* wallImage2;
+    SDL_Texture* wallImage3;
+    SDL_Texture* wallImage4;
+    SDL_Texture* wallImage5;
+    
+    SDL_Texture* NPCBoyImage;
+    SDL_Texture* NPCGirlImage;
+    SDL_Texture* NPCPrincipalImage;
 };
 
 

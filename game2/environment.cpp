@@ -27,7 +27,10 @@ Environment::Environment() {
 
 Environment::~Environment()
 {
-    delete character;
+    if (character != NULL) {
+        delete character;
+    }
+
     for (std::vector<NPC*>::iterator i = npcList.begin(); i != npcList.end(); ++i)
     {
         delete (*i);
@@ -213,14 +216,7 @@ void Environment::Update()
     }
     
     
-    //Listen for "q" to quit
-    if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
-    {
-        if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
-        {
-            main->endGame();
-        }
-    }
+
     
 }
 
@@ -265,5 +261,15 @@ void Environment::addNPC(NPC* npc){
 }
 void Environment::addItem(Items* item){
     itemList.push_back(item);
+}
+
+Character * Environment::getCharPointer()
+{
+    return this->character;
+}
+
+std::vector<NPC*>* Environment::getNPCVector()
+{
+    return &(this->npcList);
 }
 

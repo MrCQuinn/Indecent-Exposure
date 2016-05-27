@@ -35,6 +35,9 @@ Main::~Main() //Destructor
 void Main::runTests() {
     testAngleMeasure();
     testOctantDetection();
+    testLineOfSight();
+    testCollision();
+    exit(0);
 }
 
 void Main::GameLoop()
@@ -197,6 +200,15 @@ void Main::GameLoop()
             levelTwo->DrawBack();
             
             levelTwo->Update();
+        }
+        
+        //Listen for "q" to quit
+        if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
+        {
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
+            {
+                endGame();
+            }
         }
         
         

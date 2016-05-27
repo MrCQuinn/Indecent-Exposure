@@ -63,9 +63,70 @@ bool testBresenham() {
 }
 */
 
-// Test that line of sight works by setting up a game but not rendering it or advancing time:
-/*
+// Test that line of sight works:
+// (Ideally we would have two tests for each octant: a "should pass" and "shouldn't pass".
+// But I'm not manually writing 16 test cases.
 bool testLineOfSight() {
     Environment env = Environment();
+    env.addWall(100, 100, 100, 200);
+    std::cout << "Created wall from (100, 100) to (100, 200)\n";
+    bool testsPassed = true;
+    // Unblocked line in octant 0: Should pass
+    if (!env.LineOfSightExists(0, 0, 1, 0)) {
+        std::cout << "No line of sight from (0, 0) to (0, 1). This is wrong\n";
+        testsPassed = false;
+    }
+    else {
+        std::cout << "Line of sight correctly exists from (0, 0) to (0, 1)\n";
+    }
+    // Blocked line in octant 3: Shouldn't pass:
+    if (env.LineOfSightExists(101, 150, 51, 125)) {
+        std::cout << "Line of sight incorrectly exists from (101, 150) to (51, 125). This is wrong\n";
+        testsPassed = false;
+    }
+    else {
+        std::cout << "Line of sight correctly blocked from (101, 150) to (51, 125).\n";
+    }
+    if (testsPassed) {
+        std::cout << "Line of sight test passed" << std::endl;
+    }
+    else {
+        std::cout << "LINE OF SIGHT TEST FAILED!!!" << std::endl;
+    }
+    return testsPassed;
 }
-*/
+
+// Test that collision detection works:
+bool testCollision() {
+    Environment env = Environment();
+
+    env.addWall(100, 100, 200, 100);
+    env.addWall(100, 100, 100, 200);
+    std::cout << "Created wall from (100, 100) to (100, 200)\n";
+    std::cout << "Created wall from (100, 100) to (200, 100)\n";
+    bool testsPassed = true;
+
+    // Blocked horizontal movement:
+    if (env.MoveAllowed(101, 150, 99, 150)) {
+        testsPassed = false;
+        std::cout << "Movement from (101, 150) to (99, 150) was incorrectly allowed\n";
+    }
+    // Allowed horizontal movement:
+    if (!env.MoveAllowed(101, 150, 103, 150)) {
+        testsPassed = false;
+        std::cout << "Movement from (101, 150) to (103, 150) was incorrectly blocked\n";
+    }
+    // Blocked vertical movement:
+    if (env.MoveAllowed(150, 101, 150, 99)) {
+        testsPassed = false;
+        std::cout << "Movement from (150, 101) to (150, 99) was incorrectly allowed\n";
+    }
+    if (testsPassed) {
+        std::cout << "Collision tests passed" << std::endl;
+    }
+    else {
+        std::cout << "Collision TESTS FAILED!!!" << std::endl;
+    }
+
+    return testsPassed;
+}

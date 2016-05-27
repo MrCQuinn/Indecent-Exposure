@@ -23,6 +23,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int
 
 // For creating test character and not rendering
 Character::Character(Environment *e) {
+    unit = NULL;
     environment = e;
 }
 

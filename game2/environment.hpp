@@ -60,7 +60,7 @@ private:
     Character* character;
     std::vector<NPC*> npcList;
     std::vector<Wall*> wallList;
-	char blockedPixels[768][1024]; // It's [y][x]
+	bool blockedPixels[768][1024]; // It's [y][x]
     int time;
     TextMessage* timesSeen;
     TextMessage* gameTime;

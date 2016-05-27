@@ -136,19 +136,40 @@ void Main::GameLoop()
     wallImage8 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/third_piece_2.png");
     doublelocker = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/double_locker.png");
     locker = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/locker.png");
+    vertlocker = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/vert_locker.png");
     
     levelTwo->addWallpaper(new Wall(sdl_setup, wallImage6, 512, 45, 90, 1024, levelTwo));
-    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage7, 512, 189, 198, 1024, levelTwo));
-    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage8, 512, 528, 480, 1024, levelTwo));
     levelTwo->addWallpaper(new Wall(sdl_setup, doublelocker, 410, 100, 111, 308, levelTwo));
-    levelTwo->addWallpaper(new Wall(sdl_setup, doublelocker, 600, 380, 111, 308, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage7, 512, 189, 198, 1024, levelTwo));
     levelTwo->addWallpaper(new Wall(sdl_setup, locker, 605, 240, 111, 160, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, vertlocker, 950, 170, 225, 64, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, doublelocker, 600, 380, 111, 308, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, vertlocker, 950, 400, 225, 64, levelTwo));
     levelTwo->addWallpaper(new Wall(sdl_setup, locker, 335, 515, 111, 160, levelTwo));
     levelTwo->addWallpaper(new Wall(sdl_setup, locker, 550, 515, 111, 160, levelTwo));
     levelTwo->addWallpaper(new Wall(sdl_setup, locker, 413, 640, 111, 160, levelTwo));
     levelTwo->addWallpaper(new Wall(sdl_setup, locker, 625, 640, 111, 160, levelTwo));
+    levelTwo->addWallpaper(new Wall(sdl_setup, wallImage8, 512, 528, 480, 1024, levelTwo));
     
-    
+    levelTwo->addWall(0,210,32,768);//left wall
+    levelTwo->addWall(0,0,1080,90);//top wall
+    levelTwo->addWall(0,744, 1024, 768); //bottom wall
+    levelTwo->addWall(980, 90, 1080, 768); //right wall
+    levelTwo->addWall(192, 80, 260, 627); //first vertical wall pt 1
+    levelTwo->addWall(192, 690, 260, 768);// first vertical wall pt 2
+    levelTwo->addWall(250, 100, 565, 175);// top double locker
+    levelTwo->addWall(525, 240, 688, 290);// top locker
+    levelTwo->addWall(440, 375, 765, 430);// other double locker
+    levelTwo->addWall(260, 535, 420, 575);// second locker
+    levelTwo->addWall(470, 535, 650, 575);// one next to it
+    levelTwo->addWall(334, 650, 495, 700);// third locker
+    levelTwo->addWall(545, 650, 625, 700);// one next to it
+    levelTwo->addWall(25, 270, 70, 290);// first doorway1
+    levelTwo->addWall(115, 270, 195, 290);// first doorway2
+    levelTwo->addWall(755, 90, 825, 130);// second doorway1
+    levelTwo->addWall(755, 185, 825, 768);// second doorway2
+    levelTwo->addWall(915, 160, 1080, 300);// vert locker 1
+    levelTwo->addWall(915, 400, 1080, 535);//vert locker 2
     
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {

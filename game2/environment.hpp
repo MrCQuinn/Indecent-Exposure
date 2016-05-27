@@ -41,6 +41,7 @@ public:
     bool isSeen();
 	static float GetAngle(int center_x, int center_y, int outside_x, int outside_y);
     bool isComplete();
+    bool backLevel();
     
     void addWallpaper(Wall* wall);
     void addNPC(NPC* npc);

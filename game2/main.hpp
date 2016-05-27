@@ -22,6 +22,7 @@ private:
     
     Character *unit;
     Environment* levelOne;
+    Environment* levelTwo;
     int level;
     bool quit;
     bool start;

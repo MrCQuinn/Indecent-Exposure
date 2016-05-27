@@ -65,6 +65,7 @@ void Main::GameLoop()
     
     floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
     levelOne = new Environment(sdl_setup, floor, this);
+    levelTwo = new Environment(sdl_setup, floor, this);
     
     //create level 1 wall stickers here
     wallImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/first_piece.png");
@@ -87,25 +88,24 @@ void Main::GameLoop()
     levelOne->addWall(0, 0, 1024, 90);// top wall
     levelOne->addWall(0,0, 30, 768);//left wall
     levelOne->addWall(0,744, 1024, 768); //bottom wall
-    levelOne->addWall(980, 90, 1080, 768); //right wall
+    levelOne->addWall(980, 90, 1080, 645); //right wall
+    //levelOne->addWall(980, 645, 1080, 768); //right wall 2
     levelOne->addWall(270, 85, 337, 125);  //part of first doorway
     levelOne->addWall(270, 180, 337, 288); //part of first doorway
     levelOne->addWall(757, 85, 823, 125);  //part of second doorway
     levelOne->addWall(757, 180, 823, 288); //part of second doorway
     levelOne->addWall(0,285,820, 290);//second horizontal wall
-    levelOne->addWall(270, 445, 461, 461); //first part of third wall
-    levelOne->addWall(508, 445, 800, 461); //second part of third wall
-    levelOne->addWall(844, 445, 1080, 461); //third part of third wall
+    levelOne->addWall(270, 445, 461, 463); //first part of third wall
+    levelOne->addWall(508, 445, 800, 463); //second part of third wall
+    levelOne->addWall(844, 445, 1080, 463); //third part of third wall
     levelOne->addWall(270, 450, 338, 595);//vertwall
-    levelOne->addWall(270, 500, 1080, 595); // fourth wall
+    levelOne->addWall(270, 570, 1080, 595); // fourth wall
     
-    levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 300, 400, levelOne, 1, 200));
-    levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 500, 400, levelOne, 2, 200));
-    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 700, 200, levelOne, 2, 200));
-    levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 700, 420, levelOne, 3, 400));
-    
-    
-
+    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 470, 100, levelOne, 2, 100));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 185, 360, levelOne, 3, 165));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 150));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {
@@ -120,6 +120,14 @@ void Main::GameLoop()
             
             if(levelOne->isComplete()){
                 level++;
+            }
+        }else if(level == 2){
+            levelTwo->DrawBack();
+            
+            levelTwo->Update();
+            
+            if(levelTwo->backLevel()){
+                level--;
             }
         }
         

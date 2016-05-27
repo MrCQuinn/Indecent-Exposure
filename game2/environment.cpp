@@ -119,8 +119,8 @@ void Environment::DrawBack()
 {
     
     //draw everyone
-    //floorSprite->Draw();
-    //character->Draw();
+    floorSprite->Draw();
+    character->Draw();
     
     for (std::vector<NPC*>::iterator j = npcList.begin(); j != npcList.end(); ++j){
         (*j)->Draw();
@@ -212,7 +212,14 @@ bool Environment::isSeen(){
 }
 
 bool Environment::isComplete(){
-    if(character->getCharacterX() > 1080){
+    if(character->getCharacterX() > 980){
+        return true;
+    }
+    return false;
+}
+
+bool Environment::backLevel(){
+    if(character->getCharacterX() < 0){
         return true;
     }
     return false;

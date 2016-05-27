@@ -217,8 +217,8 @@ bool NPC::canSeePlayer()
             facingPlayer = true;
         }
     } else if (NPCDirection == 3) {
-        // NPC facing up
-        if (octant == 1 || octant == 2) {
+        // NPC facing up: Note that y decreases going up, so this is backwards from what you would expect
+        if (octant == 5 || octant == 6) {
             facingPlayer = true;
         }
     } else if (NPCDirection == 1) {
@@ -227,8 +227,8 @@ bool NPC::canSeePlayer()
             facingPlayer = true;
         }
     } else {
-        // NPC facing down
-        if (octant == 5 || octant == 6) {
+        // NPC facing down: Note that y increases going down, so this is backwards from what you would expect
+        if (octant == 1 || octant == 2) {
             facingPlayer = true;
         }
     }

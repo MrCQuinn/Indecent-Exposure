@@ -9,16 +9,22 @@ Main::Main() //Constructor
     start = false;
     quitEarly = true;
     sdl_setup = new SDL_Setup(&quit);
+    level = 1;
 }
 
 Main::~Main() //Destructor
 {
     //avoids memory leaks
     delete sdl_setup;
-    delete gameMap;
+    delete levelOne;
     delete splash;
     
     SDL_Quit();
+}
+
+void Main::runTests() {
+    testAngleMeasure();
+    testOctantDetection();
 }
 
 void Main::GameLoop()
@@ -35,6 +41,11 @@ void Main::GameLoop()
         sdl_setup->Begin();
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
         {
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_d)
+            {
+                this->runTests();
+            }
+
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE)
             {
                 delete splash;
@@ -59,13 +70,52 @@ void Main::GameLoop()
      *
      * draws and then updates the level object until user quits or ends program
      */
-    
-    
-    floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
-    gameMap = new Environment(sdl_setup, floor, this);
     long timeOfNextUpdate;
     long timeLeft;
-
+    
+    floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
+    levelOne = new Environment(sdl_setup, floor, this);
+    levelTwo = new Environment(sdl_setup, floor, this);
+    
+    //create level 1 wall stickers here
+    wallImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/first_piece.png");
+    wallImage2 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/second_piece.png");
+    wallImage3 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/third_piece.png");
+    wallImage4 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fourth_piece.png");
+    wallImage5 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/fifth_piece.png");
+    
+    //create NPC images here
+    NPCBoyImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/b_student_big.png");
+    NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
+    NPCPrincipalImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
+    
+    levelOne->addWallpaper(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, levelOne));
+    levelOne->addWallpaper(new Wall(sdl_setup, wallImage2, 512, 190, 200, 1024, levelOne));
+    levelOne->addWallpaper(new Wall(sdl_setup, wallImage3, 512, 377, 174, 1024, levelOne));
+    levelOne->addWallpaper(new Wall(sdl_setup, wallImage4, 512, 531, 134, 1024, levelOne));
+    levelOne->addWallpaper(new Wall(sdl_setup, wallImage5, 512, 685, 176, 1024, levelOne));
+    
+    levelOne->addWall(0, 0, 1024, 90);// top wall
+    levelOne->addWall(0,0, 30, 768);//left wall
+    levelOne->addWall(0,744, 1024, 768); //bottom wall
+    levelOne->addWall(980, 90, 1080, 645); //right wall
+    //levelOne->addWall(980, 645, 1080, 768); //right wall 2
+    levelOne->addWall(270, 85, 337, 125);  //part of first doorway
+    levelOne->addWall(270, 180, 337, 288); //part of first doorway
+    levelOne->addWall(757, 85, 823, 125);  //part of second doorway
+    levelOne->addWall(757, 180, 823, 288); //part of second doorway
+    levelOne->addWall(0,285,820, 290);//second horizontal wall
+    levelOne->addWall(270, 445, 461, 463); //first part of third wall
+    levelOne->addWall(508, 445, 800, 463); //second part of third wall
+    levelOne->addWall(844, 445, 1080, 463); //third part of third wall
+    levelOne->addWall(270, 450, 338, 595);//vertwall
+    levelOne->addWall(270, 570, 1080, 595); // fourth wall
+    
+    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 470, 100, levelOne, 2, 100));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 185, 360, levelOne, 3, 165));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 550, levelOne, 3, 150));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760));
+    //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {
@@ -73,9 +123,24 @@ void Main::GameLoop()
         
         sdl_setup->Begin();
         
-        gameMap->DrawBack();
+        if(level == 1){
+            levelOne->DrawBack();
         
-        gameMap->Update();
+            levelOne->Update();
+            
+            if(levelOne->isComplete()){
+                level++;
+            }
+        }else if(level == 2){
+            levelTwo->DrawBack();
+            
+            levelTwo->Update();
+            
+            if(levelTwo->backLevel()){
+                level--;
+            }
+        }
+        
         
         sdl_setup->End();
         

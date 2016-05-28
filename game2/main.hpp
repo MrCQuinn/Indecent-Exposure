@@ -32,6 +32,7 @@ private:
     int startTime;
     bool quit;
     bool start;
+    bool pause;
     Sprite* splash;
     Sprite* floor;
     SDL_Setup* sdl_setup;
@@ -52,6 +53,7 @@ private:
     SDL_Texture* NPCBoyImage;
     SDL_Texture* NPCGirlImage;
     SDL_Texture* NPCPrincipalImage;
+    SDL_Texture* NPCPrincipalImage2;
     
     SDL_Texture* characterImage;
     SDL_Texture* characterShoes;

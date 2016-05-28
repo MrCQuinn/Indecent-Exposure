@@ -32,6 +32,7 @@ private:
     int startTime;
     bool quit;
     bool start;
+    bool pause;
     Sprite* splash;
     Sprite* floor;
     SDL_Setup* sdl_setup;

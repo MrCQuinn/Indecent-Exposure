@@ -16,7 +16,7 @@ public:
     ~NPC();
     
     
-    double GetDistance(int x1, int y1, int x2, int y2);
+    float GetDistance(int x1, int y1, int x2, int y2);
     virtual void Update();
     void Draw();
     Sprite* GetCharacter() { return unit; }

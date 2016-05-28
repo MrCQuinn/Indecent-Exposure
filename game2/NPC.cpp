@@ -49,11 +49,11 @@ NPC::~NPC() //Destructor
     }
 }
 
-double NPC::GetDistance(int x1, int y1, int x2, int y2)
+float NPC::GetDistance(int x1, int y1, int x2, int y2)
 { //used for unit to take most direct path to target
-    double differenceX = x1 - x2;
-    double differenceY = y1 - y2;
-    double distance = sqrt((differenceX * differenceX) + (differenceY * differenceY));
+    float differenceX = x1 - x2;
+    float differenceY = y1 - y2;
+    float distance = sqrt((differenceX * differenceX) + (differenceY * differenceY));
     return distance;
 }
 
@@ -243,7 +243,9 @@ bool NPC::canSeePlayer()
     }
 
     if (facingPlayer) {
-        return environment->LineOfSightExists(our_x, our_y, player_x, player_y);
+        if (this->GetDistance(our_x, our_y, player_x, player_y) < 512) {
+            return environment->LineOfSightExists(our_x, our_y, player_x, player_y);
+        }
     }
     return false;
 }

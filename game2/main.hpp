@@ -27,11 +27,12 @@ private:
     Character *unit;
     Environment* levelOne;
     Environment* levelTwo;
+    Environment* levels[2];
     int level;
     int startTime;
     bool quit;
     bool start;
-    bool quitEarly;
+    bool pause;
     Sprite* splash;
     Sprite* floor;
     SDL_Setup* sdl_setup;
@@ -58,6 +59,7 @@ private:
     
     SDL_Texture* item1Image;
     SDL_Texture* item2Image;
+    SDL_Texture* item3Image;
 };
 
 

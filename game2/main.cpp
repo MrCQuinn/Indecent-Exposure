@@ -7,9 +7,9 @@ Main::Main() //Constructor
     SDL_Init(SDL_INIT_EVERYTHING); //Initialize everything in SDL
     quit = false; //boolean for game loop
     start = false;
-    quitEarly = true;
+    pause = false;
     sdl_setup = new SDL_Setup(&quit);
-    level = 1;
+    level = 0;
     startTime = 0;
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: ", 782, 20);
     
@@ -17,7 +17,8 @@ Main::Main() //Constructor
     
     //Create item image
     item1Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShoes.png");
-    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
+    item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShirt.png");
+    item3Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
 }
 
 Main::~Main() //Destructor
@@ -133,8 +134,8 @@ void Main::GameLoop()
     levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0));
     //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
     
-    levelOne->addItem(new Items(sdl_setup, item1Image, 375, 480, 64, 64, levelOne));
-    levelOne->addItem(new Items(sdl_setup, item2Image, 930, 675, 64, 64, levelOne));
+    levelOne->addItem(new Items(sdl_setup, item1Image, 375, 480, 64, 64, levelOne)); //Shoes sprite
+    levelOne->addItem(new Items(sdl_setup, item2Image, 930, 675, 64, 64, levelOne)); //Shirt sprite
     
     
     //level 2 stuff
@@ -179,35 +180,51 @@ void Main::GameLoop()
     levelTwo->addWall(915, 160, 1080, 300);// vert locker 1
     levelTwo->addWall(915, 400, 1080, 535);//vert locker 2
     
+    levelTwo->addItem(new Items(sdl_setup, item3Image, 930, 675, 64, 64, levelTwo)); //Pants sprite
+
+    levels[0] = levelOne;
+    levels[1] = levelTwo;
+    
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {
         timeOfNextUpdate = SDL_GetTicks() + 17;
         
         sdl_setup->Begin();
-        
-        if(level == 1){
-            levelOne->DrawBack();
-        
-            levelOne->Update();
+        if (!pause) {
+            levels[level]->DrawBack();
+            levels[level]->Update();
             
             gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
-            timesSeen->Draw("Times seen: " + std::to_string(levelOne->timesSeen()));
-            
-            if(levelOne->isComplete()){
+            timesSeen->Draw("Times seen: " + std::to_string(levels[level]->timesSeen()));
+                
+            if(levels[level]->isComplete()){
                 level++;
             }
-        }else if(level == 2){
-            levelTwo->DrawBack();
-            
-            levelTwo->Update();
         }
-        
+        else {
+            splash->Draw();
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_r)
+            {
+                pause = false;
+            }
+            
+        }
         //Listen for "q" to quit
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
         {
-            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
             {
                 endGame();
+            }
+            else if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
+            {
+                endGame();
+            }
+            else if (sdl_setup->GetEv()->key.keysym.sym == SDLK_p)
+            {
+                pause = true;
+                delete splash;
+                splash = new Sprite(sdl_setup->GetRenderer(), "images/pauseSplash.png", 0, 0, 1024, 768);
             }
         }
         

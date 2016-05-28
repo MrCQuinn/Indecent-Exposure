@@ -20,6 +20,7 @@ public:
     
     void GameLoop();
     double GetDistance(int x1, int y1, int x2, int y2);
+    void winGame();
     void endGame();
     
 private:

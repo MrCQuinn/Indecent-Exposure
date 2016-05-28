@@ -200,7 +200,7 @@ void Main::GameLoop()
             gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
             timesSeen->Draw("Times seen: " + std::to_string(levels[level]->timesSeen()));
                 
-            if(levels[level]->isComplete()){
+            if(level == 0 && levels[level]->isComplete()){
                 level++;
             }
         }

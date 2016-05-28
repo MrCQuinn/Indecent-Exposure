@@ -7,6 +7,7 @@ Main::Main() //Constructor
     SDL_Init(SDL_INIT_EVERYTHING); //Initialize everything in SDL
     quit = false; //boolean for game loop
     start = false;
+    pause = false;
     sdl_setup = new SDL_Setup(&quit);
     level = 0;
     startTime = 0;
@@ -189,23 +190,41 @@ void Main::GameLoop()
         timeOfNextUpdate = SDL_GetTicks() + 17;
         
         sdl_setup->Begin();
-        
-        levels[level]->DrawBack();
-        levels[level]->Update();
-        
-        gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
-        timesSeen->Draw("Times seen: " + std::to_string(levels[level]->timesSeen()));
+        if (!pause) {
+            levels[level]->DrawBack();
+            levels[level]->Update();
             
-        if(levels[level]->isComplete()){
-            level++;
+            gameTime->Draw("Total Game Time: " + std::to_string((SDL_GetTicks()-startTime)/1000));
+            timesSeen->Draw("Times seen: " + std::to_string(levels[level]->timesSeen()));
+                
+            if(levels[level]->isComplete()){
+                level++;
+            }
         }
-        
+        else {
+            splash->Draw();
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_r)
+            {
+                pause = false;
+            }
+            
+        }
         //Listen for "q" to quit
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
         {
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
             {
                 endGame();
+            }
+            else if (sdl_setup->GetEv()->key.keysym.sym == SDLK_q)
+            {
+                endGame();
+            }
+            else if (sdl_setup->GetEv()->key.keysym.sym == SDLK_p)
+            {
+                pause = true;
+                delete splash;
+                splash = new Sprite(sdl_setup->GetRenderer(), "images/pauseSplash.png", 0, 0, 1024, 768);
             }
         }
         

@@ -34,7 +34,9 @@ private:
     bool quit;
     bool start;
     bool pause;
+    bool won;
     Sprite* splash;
+    Sprite* winScreen;
     Sprite* floor;
     SDL_Setup* sdl_setup;
     

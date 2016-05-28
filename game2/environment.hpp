@@ -54,7 +54,7 @@ public:
     
 private:
     SDL_Setup* sdl_setup;
-    Main* main;
+    Main* mainObj;
     Sprite* floorSprite;
     SDL_Texture* wallSprite;
     

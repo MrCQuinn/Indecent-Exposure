@@ -12,6 +12,7 @@ Main::Main() //Constructor
     level = 0;
     startTime = 0;
     timesSeen = new TextMessage(sdl_setup->GetRenderer(), "Times Seen: ", 782, 20);
+    won = false;
     
     gameTime = new TextMessage(sdl_setup->GetRenderer(), "Total Game Time: " + std::to_string(SDL_GetTicks()), 750, 2);
     
@@ -33,6 +34,7 @@ Main::~Main() //Destructor
     delete splash;
     delete timesSeen;
     delete gameTime;
+    delete winScreen;
     
     SDL_Quit();
 }
@@ -54,6 +56,7 @@ void Main::GameLoop()
      */
     
     splash = new Sprite(sdl_setup->GetRenderer(), "images/splashScreen.png", 0, 0, 1024, 768); //splash screen
+    winScreen = new Sprite(sdl_setup->GetRenderer(), "images/WinnerSplash.png", 0, 0, 1024, 768);
     while (!start)
     {
         sdl_setup->Begin();
@@ -196,7 +199,7 @@ void Main::GameLoop()
     levels[0] = levelOne;
     levels[1] = levelTwo;
     
-    while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
+    while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT) && !won) //the game loop
     {
         timeOfNextUpdate = SDL_GetTicks() + 17;
         
@@ -248,22 +251,28 @@ void Main::GameLoop()
             std::this_thread::sleep_for(std::chrono::milliseconds(timeLeft));
         }
     }
+    
+    while(!quit && (sdl_setup->GetEv()->type != SDL_QUIT)){
+        sdl_setup->Begin();
+        //Listen for key input
+        if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
+        {
+            // d runs tests
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
+            {
+                quit = true;
+            }
+        }
+        winScreen->Draw();
+        sdl_setup->End();
+    }
+    
+    
 }
 
 void Main::winGame()
 {
-    delete splash;
-    splash = new Sprite(sdl_setup->GetRenderer(), "images/WinnerSplash.png", 0, 0, 1024, 768);
-    splash->Draw();
-    for (;;) {
-        if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
-        {
-            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
-            {
-                endGame();
-            }
-        }
-    }
+    won = true;
 
 }
 

@@ -10,7 +10,7 @@
 Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main, int i, int itemsC, SDL_Texture* characterImg)
 {
     sdl_setup = passed_sdl_setup;
-    main = passed_main;
+    mainObj = passed_main;
     caughtCount = 0;
     itemsCollected = itemsC;
 	// Zero out blockedPixels
@@ -235,6 +235,8 @@ void Environment::Update()
                         character->gainShoes();
                     }else if(itemsCollected == 2){
                         character->gainShirt();
+                    }else if(itemsCollected == 3){
+                        mainObj->winGame();
                     }
                     if(itemsCollected == itemCount){
                         destroyWall(980, 645, 1080, 715);

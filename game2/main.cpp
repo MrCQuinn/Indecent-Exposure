@@ -173,7 +173,7 @@ void Main::GameLoop()
     levelTwo->addWall(192, 690, 260, 768);// first vertical wall pt 2
     levelTwo->addWall(250, 100, 565, 175);// top double locker
     levelTwo->addWall(525, 240, 688, 290);// top locker
-    levelTwo->addWall(440, 375, 765, 430);// other double locker
+    levelTwo->addWall(440, 375, 765, 450);// other double locker
     levelTwo->addWall(260, 535, 420, 575);// second locker
     levelTwo->addWall(470, 535, 650, 575);// one next to it
     levelTwo->addWall(334, 650, 495, 700);// third locker

@@ -201,6 +201,7 @@ void Main::GameLoop()
         timeOfNextUpdate = SDL_GetTicks() + 17;
         
         sdl_setup->Begin();
+
         if (!pause) {
             levels[level]->DrawBack();
             levels[level]->Update();
@@ -247,6 +248,23 @@ void Main::GameLoop()
             std::this_thread::sleep_for(std::chrono::milliseconds(timeLeft));
         }
     }
+}
+
+void Main::winGame()
+{
+    delete splash;
+    splash = new Sprite(sdl_setup->GetRenderer(), "images/WinnerSplash.png", 0, 0, 1024, 768);
+    splash->Draw();
+    for (;;) {
+        if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
+        {
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
+            {
+                endGame();
+            }
+        }
+    }
+
 }
 
 void Main::endGame()

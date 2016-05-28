@@ -105,6 +105,7 @@ void Main::GameLoop()
     NPCBoyImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/b_student_big.png");
     NPCGirlImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/g_student_sprite.png");
     NPCPrincipalImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
+    NPCPrincipalImage2 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/principal_sprite.png");
     
     levelOne->addWallpaper(new Wall(sdl_setup, wallImage1, 512, 45, 90, 1024, levelOne));
     levelOne->addWallpaper(new Wall(sdl_setup, wallImage2, 512, 190, 200, 1024, levelOne));
@@ -116,7 +117,6 @@ void Main::GameLoop()
     levelOne->addWall(0,0, 30, 768);//left wall
     levelOne->addWall(0,744, 1024, 768); //bottom wall
     levelOne->addWall(980, 90, 1080, 768); //right wall
-    //levelOne->addWall(980, 645, 1080, 768); //right wall 2
     levelOne->addWall(270, 85, 337, 125);  //part of first doorway
     levelOne->addWall(270, 180, 337, 288); //part of first doorway
     levelOne->addWall(757, 85, 823, 125);  //part of second doorway
@@ -128,11 +128,8 @@ void Main::GameLoop()
     levelOne->addWall(270, 450, 338, 595);//vertwall
     levelOne->addWall(270, 570, 1080, 595); // fourth wall
     
-    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 700, 100, levelOne, 2, 350, 100));
-    //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 185, 360, levelOne, 3, 165));
-    //levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 160, 700, levelOne, 3, 0,400));
-    //levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0));
-    //levelOne->addNPC(new NPC(sdl_setup, NPCBoyImage, 965, 480, levelOne, 1, 600));
+    levelOne->addNPC(new NPC(sdl_setup, NPCGirlImage, 700, 100, levelOne, 2, 350, 100)); //Girl Sprite
+    levelOne->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 870, 330, levelOne, 1, 760, 0)); //Principle Sprite
     
     levelOne->addItem(new Items(sdl_setup, item1Image, 375, 480, 64, 64, levelOne)); //Shoes sprite
     levelOne->addItem(new Items(sdl_setup, item2Image, 930, 675, 64, 64, levelOne)); //Shirt sprite
@@ -181,9 +178,10 @@ void Main::GameLoop()
     levelTwo->addWall(915, 400, 1080, 535);//vert locker 2
     
     
-    levelTwo->addNPC(new NPC(sdl_setup, NPCGirlImage, 710, 200, levelTwo, 2, 350, 100));
-    levelTwo->addNPC(new NPC(sdl_setup, NPCBoyImage, 735, 575, levelTwo, 2, 450, 125));
-    levelTwo->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 175, 300, levelTwo, 2, 100, 400));
+    levelTwo->addNPC(new NPC(sdl_setup, NPCGirlImage, 710, 200, levelTwo, 2, 350, 100)); //Girl Sprite
+    levelTwo->addNPC(new NPC(sdl_setup, NPCBoyImage, 735, 575, levelTwo, 2, 450, 125)); //Boy Sprite
+    levelTwo->addNPC(new NPC(sdl_setup, NPCPrincipalImage, 175, 300, levelTwo, 2, 100, 400)); //Principle Sprite
+    
     
     levelTwo->addItem(new Items(sdl_setup, item3Image, 930, 675, 64, 64, levelTwo)); //Pants sprite
 

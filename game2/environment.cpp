@@ -104,11 +104,11 @@ bool Environment::LineOfSightExists(int x1, int y1, int x2, int y2) {
  * (only for horizontal/vertical movement; no diagonal movement)
  *
  * This is intended for one frame of movement
- *
- * BUG: This will segfault if you give it values that are off the screen.
- * We should fix that. To do so, Environment needs to know how big it is
  */
 bool Environment::MoveAllowed(int cur_x, int cur_y, int new_x, int new_y) {
+    if (new_y < 0 || new_x < 0 || new_x > 1024 || new_y > 768) {
+        return false;
+    }
 	// If cur_x == new_x, we're moving vertically, else horizontally
 	if (cur_x == new_x) {
 		for (int y = std::min(cur_y, new_y); y <= std::max(cur_y, new_y); ++y) {

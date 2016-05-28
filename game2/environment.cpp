@@ -10,7 +10,7 @@
 Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main, int i)
 {
     sdl_setup = passed_sdl_setup;
-    main = passed_main;
+    main_obj = passed_main;
     caughtCount = 0;
     itemsCollected = 0;
 	// Zero out blockedPixels
@@ -232,8 +232,12 @@ void Environment::Update()
                 if(character->getCharacterY() > ((*i)->getItemY() - ((*i)->getItemH()/2)) && character->getCharacterY() < ((*i)->getItemY() + ((*i)->getItemH()/2))){
                     (*i)->pickup();
                     itemsCollected++;
+                    if (itemsCollected == 3) {
+                        this->main_obj->winGame();
+                    }
+
                     if(itemsCollected == itemCount){
-                        destroyWall(980, 645, 1080, 715);
+                        destroyWall(980, 645, 1024, 715);
                     }
                 }
             }

@@ -54,11 +54,11 @@ public:
     
 private:
     SDL_Setup* sdl_setup;
-    Main* main;
+    Main* main_obj;
     Sprite* floorSprite;
     SDL_Texture* wallSprite;
     SDL_Texture* characterImage;
-    
+
     int itemCount;
     int itemsCollected;
     Character* character;

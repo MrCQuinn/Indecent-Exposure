@@ -53,6 +53,7 @@ private:
     SDL_Texture* NPCBoyImage;
     SDL_Texture* NPCGirlImage;
     SDL_Texture* NPCPrincipalImage;
+    SDL_Texture* NPCPrincipalImage2;
     
     TextMessage* timesSeen;
     TextMessage* gameTime;

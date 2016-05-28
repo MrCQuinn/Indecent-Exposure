@@ -4,11 +4,13 @@
 
 Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y,  Environment* passed_environment) //Constructor
 {
-    
     environment = passed_environment;
     //colliding = false;
     
     sdl_setup = passed_SDL_Setup;
+    
+    shoes = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_shoes.png");
+    shirt = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_shirt.png");
     
     unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 60, 90); //unit to move around
     unit->SetUpAnimation(4,4);
@@ -139,6 +141,14 @@ void Character::Animate(){
             unit->Animation(0,3,3,100);
         }
     }
+}
+
+void Character::gainShoes(){
+    unit->changeImage(shoes);
+}
+
+void Character::gainShirt(){
+    unit->changeImage(shirt);
 }
 
 

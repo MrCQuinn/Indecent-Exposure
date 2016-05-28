@@ -25,6 +25,8 @@ public:
     int getCharacterY();
     int getCharacterW();
     int getCharacterH();
+    void gainShoes();
+    void gainShirt();
     
 protected:
     
@@ -42,6 +44,9 @@ protected:
     int speed;
     
     bool isSeen();
+    
+    SDL_Texture* shoes;
+    SDL_Texture* shirt;
     
 };
 

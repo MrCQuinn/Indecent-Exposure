@@ -17,7 +17,7 @@ class Environment
 {
     friend NPC;
 public:
-    Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main, int i);
+    Environment(SDL_Setup* passed_sdl_setup, Sprite* floor, Main* passed_main, int i, int itemsC, SDL_Texture* characterImg);
     Environment();
     ~Environment();
 
@@ -54,11 +54,10 @@ public:
     
 private:
     SDL_Setup* sdl_setup;
-    Main* main_obj;
+    Main* main;
     Sprite* floorSprite;
     SDL_Texture* wallSprite;
-    SDL_Texture* characterImage;
-
+    
     int itemCount;
     int itemsCollected;
     Character* character;

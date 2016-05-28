@@ -18,6 +18,10 @@ Main::Main() //Constructor
     item1Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShoes.png");
     item2Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newShirt.png");
     item3Image = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/newPants.png");
+    
+    characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
+    characterShoes = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_shoes.png");
+    characterShirt = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_shirt.png");
 }
 
 Main::~Main() //Destructor
@@ -52,22 +56,26 @@ void Main::GameLoop()
     while (!start)
     {
         sdl_setup->Begin();
+        //Listen for key input
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
         {
+            // d runs tests
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_d)
             {
                 this->runTests();
             }
-
+            // space changes splash
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE)
             {
                 delete splash;
                 splash = new Sprite(sdl_setup->GetRenderer(), "images/InstructionSplash.png", 0, 0, 1024, 768);
             }
+            //s starts game and game clock
             if(sdl_setup->GetEv()->key.keysym.sym == SDLK_s){
                 start = true;
                 startTime = SDL_GetTicks();
             }
+            //quits game
             if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
             {
                 start = true;
@@ -88,8 +96,8 @@ void Main::GameLoop()
     long timeLeft;
     
     floor = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768); //map, one big grass tile
-    levelOne = new Environment(sdl_setup, floor, this, 2);
-    levelTwo = new Environment(sdl_setup, floor, this, 1);
+    levelOne = new Environment(sdl_setup, floor, this, 2, 0, characterImage);
+    levelTwo = new Environment(sdl_setup, floor, this, 1, 2, characterShirt);
     
     //level 1 stuff
     

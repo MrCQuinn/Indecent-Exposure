@@ -7,18 +7,17 @@
 #include <string>
 #include <cmath>
 
-Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main, int i)
+Environment::Environment(SDL_Setup* passed_sdl_setup, Sprite* floor,  Main* passed_main, int i, int itemsC, SDL_Texture* characterImg)
 {
     sdl_setup = passed_sdl_setup;
     main = passed_main;
     caughtCount = 0;
-    itemsCollected = 0;
+    itemsCollected = itemsC;
 	// Zero out blockedPixels
 	std::fill(&blockedPixels[0][0], &blockedPixels[0][0] + sizeof(blockedPixels), 0);
     floorSprite = floor;
     
-    characterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/character_big.png");
-    character = new Character(sdl_setup, characterImage, 90, 80, this);
+    character = new Character(sdl_setup, characterImg, 90, 80, this);
     
     itemCount = i;
 }
@@ -232,6 +231,11 @@ void Environment::Update()
                 if(character->getCharacterY() > ((*i)->getItemY() - ((*i)->getItemH()/2)) && character->getCharacterY() < ((*i)->getItemY() + ((*i)->getItemH()/2))){
                     (*i)->pickup();
                     itemsCollected++;
+                    if(itemsCollected == 1){
+                        character->gainShoes();
+                    }else if(itemsCollected == 2){
+                        character->gainShirt();
+                    }
                     if(itemsCollected == itemCount){
                         destroyWall(980, 645, 1080, 715);
                     }
@@ -259,7 +263,6 @@ bool Environment::isSeen(){
             return true;
         }
     }
-    
     return false;
 }
 

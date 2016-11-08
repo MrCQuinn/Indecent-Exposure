@@ -1,6 +1,6 @@
 # Indecent-Exposure
 
-##### Authors: Charlie Quinn, Alex Brandenfels, Portia Seater
+##### Authors: Charlie Quinn, Alex von Brandenfels, Portia Seater
  
 ##### Contact:cquinn@uoregon.edu, abranden@uoregon.edu, pseater@uoregon.edu
 
